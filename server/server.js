@@ -20,11 +20,11 @@ app.get("/recipe-search", (req, res) => {
 
 app.post("/recipe-search", async (req, res) => {
   const ingredients = req.body.items;
-  // console.log("just checking", ingredients[0], ingredients[1], ingredients[2]);
+  
 
   console.log("THESE ARE ALL THE INGREDIENTS BEFORE API CALL", ingredients);
 
-  // =============================================================//
+
 
   const token = process.env["GITHUB_TOKEN"];
   async function main(ingredients) {
@@ -61,12 +61,7 @@ app.post("/recipe-search", async (req, res) => {
       const cleanUp = (text) => {
         return text.replace(/[#*-]/g, "");
       };
-      // const recipes = cleanUp(text);
-      // const recipes = cleanUp(text)
-      //   .split("\n\n\n")
-      //   .map((recipe) => recipe.trim());
-
-      // console.log("This is the text after cleanup : ", cleanUpText);
+      
       const recipes = cleanUp(text);
       let cleanedResponse = recipes.replace(/^```json\n|\n```$/g, "").trim();
 
@@ -83,11 +78,11 @@ app.post("/recipe-search", async (req, res) => {
   }
   main(ingredients);
 
-  // =================================================//
+  
 });
 
 app.listen(3000, () => {
   console.log("server started listening at 3000.");
 });
 
-// module.exports = { allIngredients };
+
