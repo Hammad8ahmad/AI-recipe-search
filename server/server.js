@@ -12,9 +12,7 @@ dotenv.config();
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get("/recipe-search", (req, res) => {
-  res.json({ fruits: ["apple", "mango", "orange"] });
-});
+
 
 // Post request for getting ingredients and then sending those to the api for a response
 
@@ -24,7 +22,7 @@ app.post("/recipe-search", async (req, res) => {
 
   console.log("THESE ARE ALL THE INGREDIENTS BEFORE API CALL", ingredients);
 
-
+  // Getting response from the OpenAi api
 
   const token = process.env["GITHUB_TOKEN"];
   async function main(ingredients) {
@@ -52,7 +50,7 @@ app.post("/recipe-search", async (req, res) => {
         top_p: 1,
       });
 
-      // Send response to the client
+      
 
       // Cleaning up the text and removing * and #
 
