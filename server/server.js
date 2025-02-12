@@ -4,6 +4,7 @@ const app = express();
 const OpenAI = require("openai");
 const dotenv = require("dotenv");
 
+// Cors 
 const corsOptions = {
   origin: ["http://localhost:5173"],
 };
@@ -34,6 +35,8 @@ app.post("/recipe-search", async (req, res) => {
       baseURL: "https://models.inference.ai.azure.com",
       apiKey: token,
     });
+
+    // The actual try catch block for openai api that fetches the response from the model
 
     try {
       const response = await client.chat.completions.create({
@@ -68,6 +71,8 @@ app.post("/recipe-search", async (req, res) => {
 
       res.status(201).json(recipeObj);
     } catch (error) {
+
+
       // Handling error response
 
       console.error("The sample encountered an error:", error);
