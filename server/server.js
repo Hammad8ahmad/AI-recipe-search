@@ -13,30 +13,22 @@ dotenv.config();
 app.use(cors(corsOptions));
 app.use(express.json());
 
-
-
 // Post request for getting ingredients and then sending those to the api for a response
-
 app.post("/recipe-search", async (req, res) => {
   const ingredients = req.body.items;
-  
 
   console.log("THESE ARE ALL THE INGREDIENTS BEFORE API CALL", ingredients);
 
-  // Getting response from the OpenAi api
-
+  // Getting response from the OpenAi API
   const token = process.env["GITHUB_TOKEN"];
+
   async function main(ingredients) {
-    console.log(
-      "these are the ingredients inside the api function : ",
-      ingredients
-    );
+    console.log("these are the ingredients inside the api function : ", ingredients);
+    
     const client = new OpenAI({
       baseURL: "https://models.inference.ai.azure.com",
       apiKey: token,
     });
-
-    // The actual try catch block for openai api that fetches the response from the model
 
     try {
       const response = await client.chat.completions.create({
@@ -44,48 +36,63 @@ app.post("/recipe-search", async (req, res) => {
           { role: "system", content: "" },
           {
             role: "user",
-            content: `i have 3 ingredients tell me what sort of recipes can i make with them and also give instructions on how to make those ${ingredients[0]},${ingredients[1]} and ${ingredients[2]} also give only 3 recipes and return a json with the headings as properties and directly give me the json wihtout saying anything else and it should have an array of recipes objects each containing different recipes with ingredients and instructions as arrays and a recipe name as a property keep that same json structure everytime `,
+            content: `Given the ingredients: "${ingredients[0]}, ${ingredients[1]}, ${ingredients[2]}", please provide exactly 3 recipes with the following structure:
+{
+  "recipes": [
+    {
+      "name": "Recipe Name",
+      "ingredients": [array of ingredients],
+      "instructions": [array of steps of instructions]
+    },
+    {
+      "name": "Recipe Name",
+      "ingredients": [array of ingredients],
+      "instructions": [array of steps of instructions]
+    },
+    {
+      "name": "Recipe Name",
+      "ingredients": [array of ingredients],
+      "instructions": [array of steps of instructions]
+    }
+  ]
+}
+
+Ensure the response is valid js object without any extraneous text or formatting, just the js object as shown above.`
           },
         ],
         model: "gpt-4o",
         temperature: 1,
-        max_tokens: 4096,
+        max_tokens: 2048,
         top_p: 1,
       });
 
+      console.log("ACTUAL RESPONSE COMING FROM THE API", response.choices[0].message.content);
+
+      // Parse the raw response into a JSON object if it's a string
+      const rawResponse = response.choices[0].message.content;
       
+      // If the response is a JSON string, we parse it to JSON
+      try {
+        const jsonResponse = JSON.parse(rawResponse);
 
-      // Cleaning up the text and removing * and #
-
-      const text = response.choices[0].message.content;
-      console.log("raw text : ", text);
-      const cleanUp = (text) => {
-        return text.replace(/[#*-]/g, "");
-      };
+        // Send the parsed JSON response back to the frontend
+        res.status(201).json(jsonResponse);
+      } catch (error) {
+        // If parsing fails, handle the error and send a proper response
+        console.error("Error parsing JSON from OpenAI API:", error);
+        res.status(500).json({ error: "Failed to parse the OpenAI API response" });
+      }
       
-      const recipes = cleanUp(text);
-      let cleanedResponse = recipes.replace(/^```json\n|\n```$/g, "").trim();
-
-      console.log(cleanedResponse);
-      const recipeObj = JSON.parse(cleanedResponse);
-
-      res.status(201).json(recipeObj);
     } catch (error) {
-
-
-      // Handling error response
-
+      // Handle API request error
       console.error("The sample encountered an error:", error);
-      res.status(500).json({ error: "failed to get the recipe from the api" });
+      res.status(500).json({ error: "Failed to get the recipe from the API" });
     }
   }
-  main(ingredients);
 
-  
+  main(ingredients);
 });
 
 app.listen(3000, () => {
-  console.log("server started listening at 3000.");
+  console.log("Server started listening at port 3000.");
 });
-
-

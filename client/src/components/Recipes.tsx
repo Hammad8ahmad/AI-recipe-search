@@ -8,7 +8,7 @@ const Recipes = function ({ recipes }: { recipes: any[] }) {
           return (
             <div key={recipeIndex}
              className="w-full rounded-xl p-8 bg-[#3A4A33] flex flex-col gap-4 shadow-lg">
-              <div className="text-4xl font-bold">{recipe.recipeName}</div>
+              <div className="text-4xl font-bold">{recipe.name}</div>
               {/* Ingredients Section */}
               <div className="ingredients pt-4">
                 <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>

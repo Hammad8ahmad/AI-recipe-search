@@ -10,9 +10,12 @@ const Header = function () {
           the ingredients that you provide. Get started by writing your
           ingredients and it will give you recipes :)
         </p>
-        <div className="text-red-500 text-xl mt-2">
+        
+      
+        <div className="font-extralight inline-block text-black px-2 text-xl mt-2 bg-[#a0b56d] py-2">
           Note : Make sure to add a , between ingredients
         </div>
+
       </header>
     </>
   );
