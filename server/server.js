@@ -16,6 +16,7 @@ app.use(express.json());
 // Post request for getting ingredients and then sending those to the api for a response
 app.post("/recipe-search", async (req, res) => {
   const ingredients = req.body.items;
+  const getAnotherRecipe = req.body.requestType;
 
   console.log("THESE ARE ALL THE INGREDIENTS BEFORE API CALL", ingredients);
 
@@ -36,29 +37,17 @@ app.post("/recipe-search", async (req, res) => {
           { role: "system", content: "" },
           {
             role: "user",
-            content: `Given the ingredients: "${ingredients[0]}, ${ingredients[1]}, ${ingredients[2]}", please provide exactly 1 recipe with the following structure:
-{
+            content: `Given the ingredients: "${ingredients.join(", ")}", generate a unique recipe in this JSON format:
+
+'{
   "recipes": [
     {
       "name": "Recipe Name",
       "ingredients": [array of ingredients],
       "instructions": [array of steps of instructions]
     },
-    {
-      "name": "Recipe Name",
-      "ingredients": [array of ingredients],
-      "instructions": [array of steps of instructions]
-    },
-    {
-      "name": "Recipe Name",
-      "ingredients": [array of ingredients],
-      "instructions": [array of steps of instructions]
-    }
   ]
-}
-
-Ensure the response is valid js object without any extraneous text or formatting, just the js object as shown above.`
-          },
+}'`          },
         ],
         model: "gpt-4o",
         temperature: 1,
@@ -70,10 +59,11 @@ Ensure the response is valid js object without any extraneous text or formatting
 
       // Parse the raw response into a JSON object if it's a string
       const rawResponse = response.choices[0].message.content;
+      const cleanedResponse = rawResponse.replace(/^```json/, "").replace(/```$/, "").trim();
       
       // If the response is a JSON string, we parse it to JSON
       try {
-        const jsonResponse = JSON.parse(rawResponse);
+        const jsonResponse = JSON.parse(cleanedResponse);
 
         // Send the parsed JSON response back to the frontend
         res.status(201).json(jsonResponse);

@@ -19,7 +19,7 @@ function Interface() {
   const fetchNewRecipe = async() => {
        setLoading(true);
     try {
-      const response = await axios.post(url, { items: items.split(","),requestType:"newRecipe" }); // Ensure backend expects an array
+      const response = await axios.post(url, { items: items.split(","),requestType: "send another recipe"}); // Ensure backend expects an array
       setRecipes(response.data.recipes);
     } catch (err: any) {
       setError(true);
