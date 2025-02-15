@@ -36,7 +36,7 @@ app.post("/recipe-search", async (req, res) => {
           { role: "system", content: "" },
           {
             role: "user",
-            content: `Given the ingredients: "${ingredients[0]}, ${ingredients[1]}, ${ingredients[2]}", please provide exactly 3 recipes with the following structure:
+            content: `Given the ingredients: "${ingredients[0]}, ${ingredients[1]}, ${ingredients[2]}", please provide exactly 1 recipe with the following structure:
 {
   "recipes": [
     {

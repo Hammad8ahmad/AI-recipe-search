@@ -2,13 +2,13 @@ const Recipes = function ({ recipes }: { recipes: any[] }) {
 
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-12 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="w-full max-w-2xl mx-auto mt-4  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {recipes &&
         recipes.map((recipe: any,recipeIndex: number) => {
           return (
             <div key={recipeIndex}
-             className="w-full rounded-xl p-8 bg-[#3A4A33] flex flex-col gap-4 shadow-lg">
-              <div className="text-4xl font-bold">{recipe.name}</div>
+             className="w-full rounded-lg p-8 bg-[#3A4A33] flex flex-col justify-center items-start gap-4 shadow-lg">
+              <div className="text-4xl font-bold">{recipe.name} <i className="fa-solid fa-bookmark"></i></div>
               {/* Ingredients Section */}
               <div className="ingredients pt-4">
                 <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
