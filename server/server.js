@@ -3,6 +3,8 @@ const cors = require("cors");
 const app = express();
 const OpenAI = require("openai");
 const dotenv = require("dotenv");
+const errorHandler = require("./errorMiddleware");
+// const { default: errorHandler } = require("./errorMiddleware");
 
 // Cors 
 const corsOptions = {
@@ -13,10 +15,25 @@ dotenv.config();
 app.use(cors(corsOptions));
 app.use(express.json());
 
+
+
 // Post request for getting ingredients and then sending those to the api for a response
-app.post("/recipe-search", async (req, res) => {
+app.post("/recipe-search", async (req, res,next) => {
   const ingredients = req.body.items;
-  const getAnotherRecipe = req.body.requestType;
+
+  if(!ingredients){
+
+    const error = new Error("plz enter any ingredients")
+    error.statusCode = 400;
+
+    return next(error)
+  }
+  if(ingredients.length < 3){
+    const error = new Error("plz enter at least 3 ingredients")
+    error.statusCode = 401
+    return next(error)
+  }
+  
 
   console.log("THESE ARE ALL THE INGREDIENTS BEFORE API CALL", ingredients);
 
@@ -76,13 +93,15 @@ app.post("/recipe-search", async (req, res) => {
     } catch (error) {
       // Handle API request error
       console.error("The sample encountered an error:", error);
-      res.status(500).json({ error: "Failed to get the recipe from the API" });
+      // res.status(500).json({ error: "Failed to get the recipe from the API" });
+      next(error)
     }
   }
 
   main(ingredients);
 });
-
+// Attach error handling middleware
+app.use(errorHandler);
 app.listen(3000, () => {
   console.log("Server started listening at port 3000.");
 });
