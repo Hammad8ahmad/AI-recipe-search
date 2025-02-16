@@ -4,6 +4,7 @@ const app = express();
 const OpenAI = require("openai");
 const dotenv = require("dotenv");
 const errorHandler = require("./errorMiddleware");
+const pool = require("./db");
 // const { default: errorHandler } = require("./errorMiddleware");
 
 // Cors 
@@ -15,6 +16,17 @@ dotenv.config();
 app.use(cors(corsOptions));
 app.use(express.json());
 
+
+// Test Route
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json({ message: "Connected to DB", time: result.rows[0] });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Database connection failed" });
+  }
+});
 
 
 // Post request for getting ingredients and then sending those to the api for a response
