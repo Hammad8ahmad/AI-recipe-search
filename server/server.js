@@ -132,6 +132,18 @@ app.post("/recipe-search/save-recipe", async (req,res,next) => {
 
 })
 
+// Get all saved recipes
+app.get("/recipe-search/saved-recipes", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM recipes");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+
 // Attach error handling middleware
 app.use(errorHandler);
 app.listen(3000, () => {
