@@ -11,7 +11,7 @@ const NavBar = () => {
 
         {/* Nav Links */}
         <div className="space-x-4">
-          <Link to="/" className=" hover:text-[#26230f]">Home</Link>
+          <Link to="/" className=" hover:text-[#fefae0]">Home</Link>
           <Link to="/saved" className=" hover:text-[#fefae0]">Saved Recipes</Link>
           {/* Add more links as needed */}
         </div>

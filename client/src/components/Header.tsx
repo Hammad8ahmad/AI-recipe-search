@@ -1,7 +1,7 @@
 const Header = function () {
   return (
     <>
-      <header className="w-full max-w-3xl mx-auto p-8 sm:p-6 md:p-12 shadow-lg text-center">
+      <header className="w-full max-w-3xl mt-6 mx-auto p-8 sm:p-6 md:p-12 shadow-lg text-center">
         <h1 className="text-4xl sm:text-3xl md:text-5xl font-bold leading-tight mb-8">
           Discover Delicious Recipes
         </h1>

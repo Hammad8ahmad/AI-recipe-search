@@ -5,6 +5,7 @@ const SavedRecipes = () => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
 
   useEffect(() => {
+    console.log("Fetching saved recipes...")
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get("http://localhost:3000/recipe-search/saved-recipes");
@@ -20,8 +21,10 @@ const SavedRecipes = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-4">
-      <h1 className="text-3xl font-bold mb-6 ">Saved Recipes</h1>
+  <>
+  <h1 className="text-5xl block font-mono font-bold mb-4 mt-4  text-center ">Saved Recipes</h1>
+    <div className="w-full  grid grid-cols-2 mx-auto mt-4">
+      
 
       {savedRecipes.length > 0 ? (
         savedRecipes.map((recipe) => (
@@ -30,18 +33,18 @@ const SavedRecipes = () => {
 
             {/* Ingredients */}
             <div className="pt-4">
-              <h3 className="text-2xl font-semibold">Ingredients</h3>
+              <h3 className="text-2xl font-semibold text-[#333333]">Ingredients</h3>
               <ul className="list-disc pl-5">
                 {recipe.ingredients.map((ingredient: string, index: number) => (
-                  <li key={index}>{ingredient}</li>
+                  <li className="pt-4" key={index}>{ingredient}</li>
                 ))}
               </ul>
             </div>
 
             {/* Instructions */}
             <div className="pt-4">
-              <h3 className="text-2xl font-semibold">Instructions</h3>
-              <ol className="list-decimal pl-5">
+              <h3 className="text-2xl font-semibold text-[#333333]">Instructions</h3>
+              <ol className="list-decimal pt-4 pl-5">
                 {recipe.instructions.map((step: string, index: number) => (
                   <li key={index}>{step}</li>
                 ))}
@@ -53,6 +56,7 @@ const SavedRecipes = () => {
         <p className="text-gray-500">No saved recipes yet.</p>
       )}
     </div>
+    </>
   );
 };
 
