@@ -1,4 +1,35 @@
+import { useState } from "react";
+import axios from "axios";
 const Recipes = function ({ recipes }: { recipes: any[] }) {
+
+  const [isActive,setIsActive] = useState<boolean>(false);
+
+
+  const saveRecipe =  async (recipe : any) => {
+
+    setIsActive((prev) => !prev)
+    console.log(recipe.name)
+    console.log(recipe.ingredients)
+    console.log(recipe.instructions)
+
+      try {
+    const response = await axios.post("http://localhost:3000/recipe-search/save-recipe", {
+      name: recipe.name,
+      ingredients: recipe.ingredients,
+      instructions: recipe.instructions
+    });
+    console.log(response.data.message);
+  } catch (error) {
+    console.error("Error saving recipe:", error);
+  }
+
+
+
+
+
+
+
+  }
 
 
   return (
@@ -8,7 +39,12 @@ const Recipes = function ({ recipes }: { recipes: any[] }) {
           return (
             <div key={recipeIndex}
              className="w-full rounded-lg p-8 bg-[#3A4A33] flex flex-col justify-center items-start gap-4 shadow-lg">
-              <div className="text-4xl font-bold">{recipe.name} <i className="fa-solid fa-bookmark"></i></div>
+              <div className="text-4xl font-bold">{recipe.name}
+                 <button className="ml-2" onClick={()=> saveRecipe(recipe)}>
+                  {isActive ? <i className="fa-solid fa-bookmark"></i>  : <i className="fa-regular fa-bookmark"></i> }
+                  </button> 
+                  </div>
+                  
               {/* Ingredients Section */}
               <div className="ingredients pt-4">
                 <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>

@@ -66,7 +66,7 @@ app.post("/recipe-search", async (req, res,next) => {
           { role: "system", content: "" },
           {
             role: "user",
-            content: `Given the ingredients: "${ingredients.join(", ")}", generate a unique recipe in this JSON format:
+          content: `Given the ingredients: "${ingredients.join(", ")}", generate a unique recipe everytime with the same ingredients too and dont say anything after the recipe just have it in this JSON format:
 
 '{
   "recipes": [
@@ -112,6 +112,26 @@ app.post("/recipe-search", async (req, res,next) => {
 
   main(ingredients);
 });
+
+// Post request for saving recipes
+app.post("/recipe-search/save-recipe", async (req,res,next) => {
+
+ const {name,ingredients,instructions} = req.body;
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO recipes (name, ingredients, instructions) VALUES ($1, $2, $3) RETURNING *",
+      [name, JSON.stringify(ingredients), JSON.stringify(instructions)]
+    );
+
+    res.status(201).json({ message: "Recipe saved", recipe: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
+
+})
+
 // Attach error handling middleware
 app.use(errorHandler);
 app.listen(3000, () => {

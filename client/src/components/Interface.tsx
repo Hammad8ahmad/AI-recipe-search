@@ -73,8 +73,8 @@ function Interface() {
       } else if(err.response.status) {
         setErrorMessage("An unexpected error occurred.");
       }
+      setTimeout(() => setErrorMessage(""), 2000);
     
-
       // console.log(err)
       // setError(true);
       // setTimeout(() => setError(false), 2000);
