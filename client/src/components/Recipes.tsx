@@ -1,36 +1,26 @@
 import { useState } from "react";
-import { useRecipeContext } from "../context/RecipeContext"; // Import the context
+import { useRecipeContext } from "../context/RecipeContext"; 
 import axios from "axios";
 
 const Recipes = function () {
-  const { fetchedRecipe, saveRecipe } = useRecipeContext(); // Get data from context
-  const [isActive, setIsActive] = useState<boolean>(false); // Toggle bookmark icon state
+  const { fetchedRecipe, saveRecipe } = useRecipeContext(); 
+  const [isActive, setIsActive] = useState<boolean>(false);
 
-  if (!fetchedRecipe) return null; // Don't render if no recipe is available
+  if (!fetchedRecipe) return null; 
 
   const saveRecipeHandler = async (recipe: any) => {
     setIsActive((prev) => !prev);
-    try {
-      const response = await axios.post("http://localhost:3000/recipe-search/save-recipe", {
-        name: recipe.name,
-        ingredients: recipe.ingredients,
-        instructions: recipe.instructions,
-      });
-      console.log(response.data.message);
-      saveRecipe(recipe); // Add to context
-    } catch (error) {
-      console.error("Error saving recipe:", error);
-    }
+  try {
+    await saveRecipe(recipe); // Call only once ✅
+  } catch (error) {
+    console.error("Error saving recipe:", error);
+  }
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {fetchedRecipe.map((recipe: any, recipeIndex: number) => (
-        <div
-          key={recipeIndex}
-          className="w-full rounded-lg p-8 bg-[#3A4A33] flex flex-col justify-center items-start gap-4 shadow-lg"
-        >
-          {/* Recipe Name */}
+    <div className="w-full max-w-2xl mx-auto mt-4">
+      {Array.isArray(fetchedRecipe) && fetchedRecipe.map((recipe: any, recipeIndex: number) => (
+        <div key={recipeIndex} className="w-full rounded-lg p-8 bg-[#3A4A33] shadow-lg">
           <div className="text-4xl font-bold">
             {recipe.name}
             <button className="ml-2" onClick={() => saveRecipeHandler(recipe)}>
@@ -41,21 +31,15 @@ const Recipes = function () {
               )}
             </button>
           </div>
-
-          {/* Ingredients Section */}
           <div className="ingredients pt-4">
             <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
-            <ul className="list-inside list-disc space-y-3 text-[#333333]">
+            <ul className="list-disc space-y-3">
               {recipe.ingredients.map((ingredient: string, index: number) => (
-                <li key={index} className="text-lg text-[#333333] flex items-center gap-2">
-                  {ingredient}
-                </li>
+                <li key={index}>{ingredient}</li>
               ))}
             </ul>
           </div>
-
-          {/* Instructions Section */}
-          <div className="instructions pt-4 text-[#333333]">
+          <div className="instructions pt-4">
             <h2 className="text-2xl font-semibold mb-4">Instructions</h2>
             <div className="space-y-5">
               {recipe.instructions.map((instruction: string, index: number) => (

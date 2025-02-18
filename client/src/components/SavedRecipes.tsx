@@ -2,6 +2,7 @@ import { useRecipeContext } from "../context/RecipeContext";
 
 const SavedRecipes = () => {
   const { savedRecipes, deleteRecipe } = useRecipeContext();
+  console.log(savedRecipes)
 
   return (
     <>

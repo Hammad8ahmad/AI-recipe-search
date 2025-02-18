@@ -22,11 +22,27 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     fetchSavedRecipes();
-  }, []);
+  }, [savedRecipes]);
 
   // Save Recipe
-  const saveRecipe = (recipe: any) => {
-    setSavedRecipes((prev) => [...prev, recipe]);
+  const saveRecipe = async (recipe: any) => {
+    
+try {
+    const response = await axios.post("http://localhost:3000/recipe-search/save-recipe", {
+        name: recipe.name,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+      });
+
+    const savedRecipe = response.data // Backend returns recipe with an id
+
+    setSavedRecipes((prev) => [...prev, savedRecipe]); // Now it has an id!
+  } catch (error) {
+    console.error("Error saving recipe:", error);
+  }
+
+
+
   };
 
   // Delete Recipe
