@@ -143,6 +143,22 @@ app.get("/recipe-search/saved-recipes", async (req, res) => {
   }
 });
 
+// Delete a single recipe by id
+
+app.delete("/recipe-search/saved-recipe/:id",async (req,res) => {
+  const { id } = req.params;
+
+   try {
+    const result = await pool.query("DELETE FROM recipes WHERE id = $1",[id])
+    res.json(result)
+    
+   } catch (error) {
+    
+   }
+
+})
+
+
 
 // Attach error handling middleware
 app.use(errorHandler);
