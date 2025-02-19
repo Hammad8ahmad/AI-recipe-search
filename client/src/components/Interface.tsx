@@ -11,12 +11,15 @@ function Interface() {
   // const [items, setItems] = useState<string>(""); // Keeping items as a string
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  
+  const {isActive,setIsActive} = useRecipeContext();
 
   const { fetchedRecipe, setFetchedRecipe,items,setItems } = useRecipeContext(); // Use context
 
   const url = "http://localhost:3000/recipe-search";
 
   const fetchNewRecipe = async () => {
+    setIsActive(false)
     setLoading(true);
     try {
       const response = await axios.post(url, {

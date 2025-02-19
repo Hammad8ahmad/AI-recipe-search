@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRecipeContext } from "../context/RecipeContext"; 
 
 const Recipes = function () {
@@ -6,11 +5,13 @@ const Recipes = function () {
   // const [isActive, setIsActive] = useState<boolean>(false);
 
   if (!fetchedRecipe) return null; 
+  
 
   const saveRecipeHandler = async (recipe: any) => {
     setIsActive((prev: any) => !prev);
+    
   try {
-    await saveRecipe(recipe); // Call only once ✅
+    await saveRecipe(recipe);   // Call only once ✅
   } catch (error) {
     console.error("Error saving recipe:", error);
   }
@@ -20,13 +21,13 @@ const Recipes = function () {
     <div className="w-full max-w-2xl mx-auto mt-4">
       {Array.isArray(fetchedRecipe) && fetchedRecipe.map((recipe: any, recipeIndex: number) => (
         <div key={recipeIndex} className="w-full rounded-lg p-8 bg-[#3A4A33] shadow-lg">
-          <div className="text-4xl font-bold">
+          <div className="text-4xl font-bold flex justify-between items-start">
             {recipe.name}
-            <button className="ml-2 mt-2" onClick={() => saveRecipeHandler(recipe)}>
+            <button onClick={() => saveRecipeHandler(recipe)}>
               {isActive ? (
-                <i className="fa-solid fa-bookmark"></i>
+                <i className="fa-solid fa-bookmark" ></i>
               ) : (
-                <i className="fa-regular fa-bookmark"></i>
+                <i className="fa-regular fa-bookmark" ></i>
               )}
             </button>
           </div>
