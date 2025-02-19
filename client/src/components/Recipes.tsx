@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRecipeContext } from "../context/RecipeContext"; 
-import axios from "axios";
 
 const Recipes = function () {
   const { fetchedRecipe, saveRecipe } = useRecipeContext(); 
@@ -32,10 +31,10 @@ const Recipes = function () {
             </button>
           </div>
           <div className="ingredients pt-4">
-            <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
-            <ul className="list-disc space-y-3">
+            <h2 className="text-2xl font-semibold mb-2 text-[#333333]">Ingredients</h2>
+            <ul className="list-disc text-[#fefae0] pl-5">
               {recipe.ingredients.map((ingredient: string, index: number) => (
-                <li key={index}>{ingredient}</li>
+                <li className="pt-4" key={index}>{ingredient}</li>
               ))}
             </ul>
           </div>

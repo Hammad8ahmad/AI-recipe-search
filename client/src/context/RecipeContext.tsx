@@ -10,9 +10,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [items,setItems] = useState<any>("");
 
 
-  // Fetch saved recipes on mount
-  useEffect(() => {
-    const fetchSavedRecipes = async () => {
+   const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get("http://localhost:3000/recipe-search/saved-recipes");
         setSavedRecipes(response.data); // Set fetched recipes to state
@@ -20,23 +18,27 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
         console.error("Error fetching saved recipes:", error);
       }
     };
+  
 
-    fetchSavedRecipes();
-  }, [savedRecipes]);
+  // Fetch saved recipes on mount
+  useEffect(() => {
+    // fetchSavedRecipes();
+  }, []);
 
   // Save Recipe
   const saveRecipe = async (recipe: any) => {
     
 try {
-    const response = await axios.post("http://localhost:3000/recipe-search/save-recipe", {
+     await axios.post("http://localhost:3000/recipe-search/save-recipe", {
         name: recipe.name,
         ingredients: recipe.ingredients,
         instructions: recipe.instructions,
       });
 
-    const savedRecipe = response.data // Backend returns recipe with an id
+    // const savedRecipe = response.data    // Backend returns recipe with an id
 
-    setSavedRecipes((prev) => [...prev, savedRecipe]); // Now it has an id!
+    // setSavedRecipes((prev) => [...prev, savedRecipe]);
+    await fetchSavedRecipes()            // Now it has an id!
   } catch (error) {
     console.error("Error saving recipe:", error);
   }
@@ -49,7 +51,8 @@ try {
   const deleteRecipe = async (id: any) => {
     try {
       await axios.delete(`http://localhost:3000/recipe-search/saved-recipe/${id}`);
-      setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
+      // setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
+      await fetchSavedRecipes()
     } catch (error) {
       console.log("Error deleting recipe:", error);
     }
