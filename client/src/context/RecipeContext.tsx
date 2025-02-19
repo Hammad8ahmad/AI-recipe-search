@@ -8,6 +8,8 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
   const [items,setItems] = useState<any>("");
+  const [isActive, setIsActive] = useState<boolean>(false);
+
 
 
    const fetchSavedRecipes = async () => {
@@ -66,7 +68,9 @@ try {
       fetchedRecipe, 
       setFetchedRecipe,
       items,
-      setItems
+      setItems,
+      isActive,
+      setIsActive
     }}>
       {children}
     </RecipeContext.Provider>
