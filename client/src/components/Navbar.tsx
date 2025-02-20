@@ -15,7 +15,7 @@ const NavBar = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <Link to="/" className="hover:text-[#fefae0] transition-colors duration-300">
+          <Link to="/" className="hover:text-[#fefae0]  transition-colors duration-300">
             AI Recipe Search
           </Link>
         </motion.div>
@@ -35,10 +35,10 @@ const NavBar = () => {
 
         {/* Desktop Nav Links */}
         <div className="hidden md:flex space-x-6">
-          <Link to="/" className="text-xl font-mono hover:text-[#fefae0] transition-colors duration-300">
+          <Link to="/" className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
             Home
           </Link>
-          <Link to="/saved" className="text-xl font-mono hover:text-[#fefae0] transition-colors duration-300">
+          <Link to="/saved" className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
             Saved
           </Link>
         </div>
