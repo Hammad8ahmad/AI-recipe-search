@@ -1,13 +1,19 @@
 import { useRecipeContext } from "../context/RecipeContext";
 
+
 const SavedRecipes = () => {
   const { savedRecipes, deleteRecipe } = useRecipeContext();
   console.log(savedRecipes)
 
   return (
     <>
-      <h1 className="text-5xl block font-mono font-bold mb-4 mt-4 text-center">Saved Recipes</h1>
-      <div className="w-full grid grid-cols-2 mx-auto mt-4">
+  <h1
+  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-mono font-bold text-center text-black 
+            mb-6 mt-6"
+>
+  Saved Recipes
+</h1>
+      <div className="w-full grid px-2 grid-cols-2 mx-auto mt-4">
         {savedRecipes.length > 0 ? (
           savedRecipes.map((recipe: any) => (
             <div key={recipe.id} className="w-full rounded-lg p-6 bg-[#3A4A33] text-[#fefae0] shadow-lg mb-4">
@@ -47,7 +53,7 @@ const SavedRecipes = () => {
             </div>
           ))
         ) : (
-          <p className="text-gray-500">No saved recipes yet.</p>
+          <p className="text-gray-500 ">No saved recipes yet.</p>
         )}
       </div>
     </>

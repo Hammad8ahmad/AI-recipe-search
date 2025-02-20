@@ -24,7 +24,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Fetch saved recipes on mount
   useEffect(() => {
-    // fetchSavedRecipes();
+    fetchSavedRecipes();
   }, []);
 
   // Save Recipe

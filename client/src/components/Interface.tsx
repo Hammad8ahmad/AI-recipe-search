@@ -12,7 +12,7 @@ function Interface() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   
-  const {isActive,setIsActive} = useRecipeContext();
+  const {setIsActive} = useRecipeContext();
 
   const { fetchedRecipe, setFetchedRecipe,items,setItems } = useRecipeContext(); // Use context
 
