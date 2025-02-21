@@ -5,7 +5,6 @@ const OpenAI = require("openai");
 const dotenv = require("dotenv");
 const errorHandler = require("./errorMiddleware");
 const pool = require("./db");
-// const { default: errorHandler } = require("./errorMiddleware");
 
 // Cors 
 const corsOptions = {
@@ -105,7 +104,6 @@ app.post("/recipe-search", async (req, res,next) => {
     } catch (error) {
       // Handle API request error
       console.error("The sample encountered an error:", error);
-      // res.status(500).json({ error: "Failed to get the recipe from the API" });
       next(error)
     }
   }
@@ -153,6 +151,7 @@ app.delete("/recipe-search/saved-recipe/:id",async (req,res) => {
     res.json(result)
     
    } catch (error) {
+    res.status(500).json({error : "Database error"})
     
    }
 

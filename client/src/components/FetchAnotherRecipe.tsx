@@ -1,4 +1,3 @@
-import { useRecipeContext } from "../context/RecipeContext"
 
  function FetchAnotherRecipe({fetchNewRecipe } : {fetchNewRecipe:any}) {
 
