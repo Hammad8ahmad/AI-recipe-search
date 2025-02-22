@@ -16,7 +16,7 @@ function Interface() {
 
   const { fetchedRecipe, setFetchedRecipe,items,setItems } = useRecipeContext(); // Use context
 
-  const url = "http://localhost:3000/recipe-search";
+  const url = "http://localhost:3000/api/recipe-search";
 
   const fetchNewRecipe = async () => {
     setIsActive(false)

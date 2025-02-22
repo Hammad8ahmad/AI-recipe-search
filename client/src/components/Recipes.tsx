@@ -8,13 +8,18 @@ const Recipes = function () {
   
 
   const saveRecipeHandler = async (recipe: any) => {
-    setIsActive((prev: any) => !prev);
-    
-  try {
+    const newState = !isActive;
+    setIsActive(newState)
+
+    if(newState){
+      try {
     await saveRecipe(recipe);   // Call only once ✅
   } catch (error) {
     console.error("Error saving recipe:", error);
   }
+
+    }
+    
   };
 
   return (

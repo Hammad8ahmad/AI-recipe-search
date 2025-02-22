@@ -14,7 +14,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
 
    const fetchSavedRecipes = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/recipe-search/saved-recipes");
+        const response = await axios.get("http://localhost:3000/api/recipes");
         setSavedRecipes(response.data); // Set fetched recipes to state
       } catch (error) {
         console.error("Error fetching saved recipes:", error);
@@ -31,7 +31,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const saveRecipe = async (recipe: any) => {
     
 try {
-     await axios.post("http://localhost:3000/recipe-search/save-recipe", {
+     await axios.post("http://localhost:3000/api/recipes", {
         name: recipe.name,
         ingredients: recipe.ingredients,
         instructions: recipe.instructions,
@@ -52,7 +52,7 @@ try {
   // Delete Recipe
   const deleteRecipe = async (id: any) => {
     try {
-      await axios.delete(`http://localhost:3000/recipe-search/saved-recipe/${id}`);
+      await axios.delete(`http://localhost:3000/api/recipes/${id}`);
       // setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
       await fetchSavedRecipes()
     } catch (error) {
