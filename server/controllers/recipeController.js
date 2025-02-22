@@ -16,8 +16,8 @@ const postRecipe = async (req,res,next) => {
 
     res.status(201).json({ message: "Recipe saved", recipe: result.rows[0] });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error" });
+    next(err)
+    
   }
 
 }
@@ -29,8 +29,7 @@ const getRecipes = async (req, res) => {
     const result = await pool.query("SELECT * FROM recipes");
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error" });
+    next(err)
   }
 }
 
@@ -44,8 +43,7 @@ const deleteRecipe = async (req,res) => {
     res.json(result)
     
    } catch (error) {
-    res.status(500).json({error : "Database error"})
-    
+    next(err)
    }
 
 }
