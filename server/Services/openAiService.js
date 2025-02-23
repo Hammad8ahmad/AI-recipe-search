@@ -1,4 +1,5 @@
-// services/recipeService.js
+// openai service to fetch data
+
 const OpenAI = require("openai");
 
 const fetchRecipesFromOpenAI = async (ingredients) => {
