@@ -14,7 +14,7 @@ function Interface() {
   
   const {setIsActive} = useRecipeContext();
 
-  const { fetchedRecipe, setFetchedRecipe,items,setItems } = useRecipeContext(); // Use context
+  const { fetchedRecipe, setFetchedRecipe,item,setItem } = useRecipeContext(); // Use context
 
   const url = "http://localhost:3000/api/recipe-search";
 
@@ -23,10 +23,10 @@ function Interface() {
     setLoading(true);
     try {
       const response = await axios.post(url, {
-        items: items.split(","),
+        
         requestType: "send another recipe",
       });
-      setFetchedRecipe(response.data.recipes); // Store fetched recipe in context
+      setFetchedRecipe(response.data); // Store fetched recipe in context
     } catch (err: any) {
       console.log(err.message);
     } finally {
@@ -37,21 +37,19 @@ function Interface() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!items.trim()) {
+    if (!item.trim()) {
       setErrorMessage("Plz enter any ingredients");
       setTimeout(() => setErrorMessage(""), 2000);
       return;
-    } else if (items.split(",").length < 3) {
-      setErrorMessage("Plz enter at least 3 ingredients");
-      setTimeout(() => setErrorMessage(""), 2000);
-      return;
-    }
+    } 
 
     setLoading(true);
     setErrorMessage(""); // Clear previous errors
     try {
-      const response = await axios.post(url, { items: items.split(",") });
-      setFetchedRecipe(response.data.recipes); // Store fetched recipe in context
+      const response = await axios.post(url, { items:item});
+      console.log(response.data.data)
+    
+      setFetchedRecipe(response.data.data); // Store fetched recipe in context
     } catch (err: any) {
       console.log(err.response);
       if (err.response.status === 429) {
@@ -84,8 +82,8 @@ function Interface() {
             placeholder="e.g., Bread, Milk, Egg..."
             className="input-bar w-full"
             name="text"
-            value={items}
-            onChange={(e) => setItems(e.target.value)}
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
           />
           <button type="submit" className="hidden">Search</button>
         </div>

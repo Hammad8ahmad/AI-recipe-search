@@ -2,7 +2,7 @@
 
 const OpenAI = require("openai");
 
-const fetchRecipesFromOpenAI = async (ingredients) => {
+const fetchRecipesFromOpenAI = async (item) => {
   const token = process.env["GITHUB_TOKEN"];
 
   const client = new OpenAI({
@@ -15,7 +15,7 @@ const fetchRecipesFromOpenAI = async (ingredients) => {
       { role: "system", content: "" },
       {
         role: "user",
-        content: `Given the ingredients: "${ingredients.join(
+        content: `Given the ingredients: "${item.join(
           ", "
         )}", generate a unique recipe in this JSON format:
 

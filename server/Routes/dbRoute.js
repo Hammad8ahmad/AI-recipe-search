@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router;
-const pool = require("../Model/db");
+const pool = require("../../Model/db");
 
 
 // Test Route for testing the connection to db
