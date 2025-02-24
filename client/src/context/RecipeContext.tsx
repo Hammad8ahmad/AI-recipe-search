@@ -15,6 +15,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
    const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/recipes");
+        console.log("this is the data which is coming when we fetch the saved recipes : ",response.data)
         setSavedRecipes(response.data); // Set fetched recipes to state
       } catch (error) {
         console.error("Error fetching saved recipes:", error);
@@ -29,12 +30,23 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Save Recipe
   const saveRecipe = async (recipe: any) => {
+    // console.log("SAVED RECIPE OBJECT IN CONTEXT ----")
+    // console.log(recipe.label)
+    // console.log(recipe.ingredients.map(ingredient => ingredient.text))
+    // console.log(recipe.calories);
+    // console.log(recipe.images.SMALL.url)
+
+
     
 try {
      await axios.post("http://localhost:3000/api/recipes", {
-        name: recipe.name,
-        ingredients: recipe.ingredients,
-        instructions: recipe.instructions,
+       label : recipe.label,
+        ingredients:recipe.ingredients.map((ingredient : any) => ({
+          text : ingredient.text,
+        })),
+        calories:recipe.calories,
+        image_url:recipe.images.SMALL.url
+       
       });
 
     // const savedRecipe = response.data    // Backend returns recipe with an id

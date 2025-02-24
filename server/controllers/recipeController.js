@@ -6,12 +6,12 @@ const pool = require("../Model/db");
 
 const postRecipe = async (req,res,next) => {
 
- const {name,ingredients,instructions} = req.body;
+ const {label,ingredients,calories,image_url} = req.body;
 
   try {
     const result = await pool.query(
-      "INSERT INTO recipes (name, ingredients, instructions) VALUES ($1, $2, $3) RETURNING *",
-      [name, JSON.stringify(ingredients), JSON.stringify(instructions)]
+      "INSERT INTO recipes (label, ingredients, calories, image_url) VALUES ($1, $2, $3, $4) RETURNING *",
+      [label, JSON.stringify(ingredients),calories,image_url]
     );
 
     res.status(201).json({ message: "Recipe saved", recipe: result.rows[0] });
@@ -24,7 +24,7 @@ const postRecipe = async (req,res,next) => {
 
 // Getting all recipes from the db
 
-const getRecipes = async (req, res) => {
+const getRecipes = async (req, res,next) => {
   try {
     const result = await pool.query("SELECT * FROM recipes");
     res.json(result.rows);
