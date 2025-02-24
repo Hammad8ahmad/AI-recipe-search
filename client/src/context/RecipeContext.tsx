@@ -8,7 +8,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
   const [item,setItem] = useState<any>("");
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<any>([]);
 
 
 
