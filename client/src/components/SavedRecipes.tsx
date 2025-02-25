@@ -1,7 +1,19 @@
 import { useRecipeContext } from "../context/RecipeContext";
+import { useState } from "react";
 
 const SavedRecipes = () => {
   const { savedRecipes, deleteRecipe,aiHandler,NutritionAnalysis} = useRecipeContext();
+  const [activeRecipeId, setActiveRecipeId] = useState(null);
+  const [loading,setLoading] = useState(false);
+
+  const handlerAiClick = async (recipe : any) => {
+    setLoading(true)
+    setActiveRecipeId(recipe.id)
+    await aiHandler(recipe)
+    setLoading(false)
+  }
+
+  
   console.log("Saved recipes check:", savedRecipes);
   console.log("NUTRITIONAL ANALYSIS",NutritionAnalysis)
 
@@ -54,20 +66,25 @@ const SavedRecipes = () => {
               />
               {/* AI Button */}
               <button
-              onClick={() =>  aiHandler(recipe)}
+              onClick={() =>  handlerAiClick(recipe)}
               className="relative px-4 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 overflow-hidden shadow-lg hover:from-indigo-600 hover:to-blue-500 transition-all duration-300 ease-in-out">
                <span className="absolute inset-0 bg-white opacity-30 blur-md rounded-lg"></span>
                <span className="relative z-10">✨ Nutrition Insights</span>
               </button>
-              {/* AI TEST */}
-              {NutritionAnalysis && NutritionAnalysis.health_benefits.map((item : any) => {
-                return <div>{item}</div>
-              })}
+              
+              {loading ?  (
+      <div className="flex justify-center items-center space-x-2">
+        <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+        <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+        <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
+      </div>
+    ) : }
+             
 
 
 
               {/* Delete Button */}
-              <div className="mt-auto flex justify-end pt-4">
+              <div className="mt-auto absolute bottom-4 right-4 pt-4">
                 <button
                   className="px-4 py-2 outline-none bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
                   onClick={() => deleteRecipe(recipe.id)}
