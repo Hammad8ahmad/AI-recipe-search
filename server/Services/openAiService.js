@@ -1,9 +1,8 @@
-// openai service to fetch data
-
 const OpenAI = require("openai");
 
-const fetchRecipesFromOpenAI = async (item) => {
-  const token = process.env["GITHUB_TOKEN"];
+const fetchRecipesFromOpenAI = async (recipe) => {
+  console.log("this is inside the service",recipe.recipe.ingredients)
+  const token = process.env["GITHUB_TOKEN"]; // Use OpenAI API key
 
   const client = new OpenAI({
     baseURL: "https://models.inference.ai.azure.com",
@@ -12,36 +11,49 @@ const fetchRecipesFromOpenAI = async (item) => {
 
   const response = await client.chat.completions.create({
     messages: [
-      { role: "system", content: "" },
+      { role: "system", content: "You are a nutrition expert providing accurate nutritional insights for recipes." },
       {
         role: "user",
-        content: `Given the ingredients: "${item.join(
-          ", "
-        )}", generate a unique recipe in this JSON format:
+        content: `Analyze the nutritional value of the following recipe and return the data in JSON format:
+
+Recipe Name: ${recipe.recipe.label}
+Ingredients: ${recipe.recipe.ingredients.map((ing) => ing.text).join(", ")}
+
+Provide insights in this format:
 
 {
-  "recipes": [
-    {
-      "name": "Recipe Name",
-      "ingredients": [array of ingredients],
-      "instructions": [array of steps of instructions]
-    }
-  ]
-}`},
+  "recipe": "Recipe Name",
+  "calories": "Total calories",
+  "macros": {
+    "carbohydrates": "Grams",
+    "protein": "Grams",
+    "fat": "Grams"
+  },
+  "micronutrients": {
+    "vitamins": ["List of key vitamins"],
+    "minerals": ["List of key minerals"]
+  },
+  "health_benefits": ["List some health benefits of this recipe"]
+}
+important : Dont say anything else just give me the pure json  
+`
+      },
     ],
     model: "gpt-4o",
-    temperature: 1,
-    max_tokens: 2048,
+    temperature: 0.7,
+    max_tokens: 1024,
     top_p: 1,
   });
 
   const rawResponse = response.choices[0]?.message?.content || "";
+  console.log("RAW RESPONSE : ",rawResponse)
   const cleanedResponse = rawResponse
     .replace(/^```json/, "")
     .replace(/```$/, "")
     .trim();
+    console.log(cleanedResponse)
 
   return JSON.parse(cleanedResponse);
 };
 
-module.exports = { fetchRecipesFromOpenAI };
+module.exports = { fetchRecipesFromOpenAI};

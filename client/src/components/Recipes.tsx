@@ -1,16 +1,24 @@
 import { useRecipeContext } from "../context/RecipeContext";
-import React from "react";
+import React, { useState,useEffect} from "react";
 
 const Recipes = React.memo(() => {
-  const { fetchedRecipe, saveRecipe, isActive, setIsActive,isSaved,setIsSaved } = useRecipeContext();
-
+  const { fetchedRecipe, saveRecipe, isActive, setIsActive } = useRecipeContext();
+  const [isSaved,setIsSaved] = useState<any>(false)
 
 
   if (!fetchedRecipe) return null;
+  useEffect ( ()=> {
+    setIsSaved(false)
+    setIsActive(false)
+
+
+
+  },[fetchedRecipe])
 
   
 
   const saveRecipeHandler = async (recipe: any,recipeIndex : number) => {
+    
     // console.log("saved recipe in hadnler  : ",recipe)
     // console.log(recipe.label)
     // console.log(recipe.calories)
@@ -44,6 +52,7 @@ const Recipes = React.memo(() => {
 
     // After successful save, mark the recipe as saved
     setIsSaved((prev: any) => ({ ...prev, [recipeIndex]: true }));
+   
   } catch (error) {
     console.error("Error saving recipe:", error);
 
@@ -66,7 +75,7 @@ const Recipes = React.memo(() => {
             className="absolute top-8 right-4 text-3xl text-white"
           >
             {isActive[recipeIndex] ? (
-              <div className=" px-4 text-[14px] bg-green-500">Saved</div>
+              <i className="fa-solid fa-bookmark"></i>
             ) : (
               <i className="fa-regular fa-bookmark"></i>
             )}

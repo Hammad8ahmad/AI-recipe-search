@@ -8,7 +8,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
   const [isActive, setIsActive] = useState<any>({});
-  const [isSaved,setIsSaved] = useState(false)
+  const [NutritionAnalysis,setNutritionAnalysis] = useState<any>(null)
   
 
 
@@ -36,6 +36,8 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
     // console.log(recipe.ingredients.map(ingredient => ingredient.text))
     // console.log(recipe.calories);
     // console.log(recipe.images.SMALL.url)
+
+
 
 
     
@@ -73,6 +75,23 @@ try {
     }
   };
 
+  // Testing ai handler
+
+  const aiHandler = async(recipe:any) => {
+    console.log("this is in the ai handler",recipe)
+    try {
+      const response = await axios.post("http://localhost:3000/api/open-ai",{
+        recipe : recipe
+      
+    })
+      console.log("THIS IS THE RESPONSE FROM AI ",response)
+      setNutritionAnalysis(response.data)
+    } catch (error) {
+      
+    }
+
+  }
+
   return (
     <RecipeContext.Provider value={{ 
       savedRecipes, 
@@ -82,8 +101,9 @@ try {
       setFetchedRecipe,
       isActive,
       setIsActive,
-      isSaved,
-      setIsSaved
+      aiHandler,
+      NutritionAnalysis,
+      setNutritionAnalysis
     }}>
       {children}
     </RecipeContext.Provider>

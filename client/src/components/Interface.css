@@ -58,14 +58,14 @@ p {
 }
 
 /* Recipe Section */
-.grid {
+/* .grid {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(
     auto-fill,
     minmax(280px, 1fr)
-  ); /* Auto layout with responsive columns */
-}
+  ); 
+} */
 
 .w-full {
   width: 100%;
@@ -191,12 +191,14 @@ p {
   }
 }
 
+
+
 /* For Large Screens */
-@media (min-width: 1024px) {
+
+/* @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(3, 1fr); /* 3 columns for larger screens */
-  }
-}
+  
 
 
 /* ERROR TESTING */

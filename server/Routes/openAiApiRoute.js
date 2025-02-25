@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const OpenAI = require("openai");
-const { getRecipesFromOpenAiApi } = require("../controllers/apiController");
+const getResponseFromAi = require("../controllers/openAiController");
 
-// Post route for getting ingredients and fetching recipes from OpenAI
-router.post("/",getRecipesFromOpenAiApi);
+router.post("/",getResponseFromAi)
 
-module.exports = router;
+module.exports = router

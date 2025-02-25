@@ -4,7 +4,7 @@
 const { fetchingRecipesFromEdamam } = require("../Services/edamamApiService");
 // const { fetchRecipesFromOpenAI } = require("../Services/openAiService");
 
-const getRecipesFromOpenAiApi = async (req, res, next) => {
+const getRecipesFromEdamamApi = async (req, res, next) => {
   try {
     const item = req.body.items;
 
@@ -32,4 +32,4 @@ const getRecipesFromOpenAiApi = async (req, res, next) => {
   }
 };
 
-module.exports = {getRecipesFromOpenAiApi}
+module.exports = {getRecipesFromEdamamApi}
