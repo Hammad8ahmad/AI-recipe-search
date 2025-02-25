@@ -7,8 +7,9 @@ const RecipeContext = createContext<any>(null);
 export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
-  const [item,setItem] = useState<any>("");
-  const [isActive, setIsActive] = useState<any>([]);
+  const [isActive, setIsActive] = useState<any>({});
+  const [isSaved,setIsSaved] = useState(false)
+  
 
 
 
@@ -79,10 +80,10 @@ try {
       deleteRecipe, 
       fetchedRecipe, 
       setFetchedRecipe,
-      item,
-      setItem,
       isActive,
-      setIsActive
+      setIsActive,
+      isSaved,
+      setIsSaved
     }}>
       {children}
     </RecipeContext.Provider>

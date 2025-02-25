@@ -9,12 +9,18 @@ import { useRecipeContext } from "../context/RecipeContext";
 function Interface() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [hasSearched, setHasSearched] = useState<boolean>(false); // To control when to render Recipes
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
+  const [item, setItem] = useState("");
 
-  const { setFetchedRecipe, item, setItem } = useRecipeContext();
+  const { fetchedRecipe, setFetchedRecipe, } = useRecipeContext();
 
   const url = "http://localhost:3000/api/recipe-search";
 
+  const handleChange = (e : any) => {
+    setItem(e.target.value)
+    console.log("just a check : ",e.target.value)
+  }
+   console.log("checking rerender in in terface component")
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -30,6 +36,7 @@ function Interface() {
       const response = await axios.post(url, { items: item });
       console.log("Data from backend:", response.data);
       setFetchedRecipe(response.data);
+      setItem("");
       setHasSearched(true); // Only show Recipes after successful search
     } catch (err: any) {
       if (err.response?.status === 429) {
@@ -60,7 +67,7 @@ function Interface() {
               className="input-bar w-full"
               name="text"
               value={item}
-              onChange={(e) => setItem(e.target.value)}
+              onChange={handleChange}
             />
             <button type="submit" className="hidden">Search</button>
           </div>
@@ -77,13 +84,30 @@ function Interface() {
           )}
         </form>
 
+        {/* fetches the new recipes when you search */}
+
         {loading ? (
           <div className="flex items-center justify-center mt-20">
             <OrbitProgress variant="track-disc" color="#000000" size="medium" />
           </div>
         ) : (
-          hasSearched && <Recipes />
+          hasSearched ? <Recipes />:fetchedRecipe && <Recipes/>
         )}
+
+        
+
+      
+
+        {/* fetches recipes that are stored in the state */}
+
+        {/* {/* {loading ? (
+          <div className="flex items-center justify-center mt-20">
+            <OrbitProgress variant="track-disc" color="#000000" size="medium" />
+          </div>
+        ) : (
+          fetchedRecipe && <Recipes />
+        )} */}
+         
       </main>
 
       <footer className="text-center mt-auto py-4 bg-[#a0b56d]">
@@ -96,3 +120,6 @@ function Interface() {
 }
 
 export default Interface;
+
+
+

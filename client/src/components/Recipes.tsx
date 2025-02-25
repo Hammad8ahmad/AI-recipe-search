@@ -1,29 +1,58 @@
 import { useRecipeContext } from "../context/RecipeContext";
+import React from "react";
 
-const Recipes = function () {
-  const { fetchedRecipe, saveRecipe, isActive, setIsActive } = useRecipeContext();
+const Recipes = React.memo(() => {
+  const { fetchedRecipe, saveRecipe, isActive, setIsActive,isSaved,setIsSaved } = useRecipeContext();
+
+
 
   if (!fetchedRecipe) return null;
-  console.log(fetchedRecipe)
 
-  const saveRecipeHandler = async (recipe: any) => {
+  
+
+  const saveRecipeHandler = async (recipe: any,recipeIndex : number) => {
     // console.log("saved recipe in hadnler  : ",recipe)
-    console.log(recipe.label)
-    console.log(recipe.calories)
-    console.log(recipe.ingredients)
-    console.log(recipe.images.SMALL)
+    // console.log(recipe.label)
+    // console.log(recipe.calories)
+    // console.log(recipe.ingredients)
+    // console.log(recipe.images.SMALL)
+    // console.log("recipeindex : ",recipeIndex)
 
-    const newState = !isActive;
-    setIsActive(newState);
+  //    setIsActive((prev:any) =>({
+  //   ...prev,
+  //   [recipeIndex] : !prev[recipeIndex],
+  //   setIsSaved : false
+  // }));
+ 
+  //   console.log("testing state : ",isActive[recipeIndex])
+  //   if(!isActive[recipeIndex]){
+  //     try {
+  //       await saveRecipe(recipe); // Save only once ✅
+  //     } catch (error) {
+  //       console.error("Error saving recipe:", error);
+      
+  //   }
+  //   }
 
-    if (newState) {
-      try {
-        await saveRecipe(recipe); // Save only once ✅
-      } catch (error) {
-        console.error("Error saving recipe:", error);
-      }
-    }
-  };
+  
+  try {
+    // Mark the recipe as active (saved)
+    setIsActive((prev: any) => ({ ...prev, [recipeIndex]: true }));
+
+    // Await the save operation
+    await saveRecipe(recipe);
+
+    // After successful save, mark the recipe as saved
+    setIsSaved((prev: any) => ({ ...prev, [recipeIndex]: true }));
+  } catch (error) {
+    console.error("Error saving recipe:", error);
+
+    // Optionally, rollback active state if save fails
+    setIsActive((prev: any) => ({ ...prev, [recipeIndex]: false }));
+  }
+
+      
+  }; 
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-4 flex flex-col gap-6 justify-center items-center">
@@ -32,11 +61,12 @@ const Recipes = function () {
           
           {/* Save icon pinned to top right */}
           <button 
-            onClick={() => saveRecipeHandler(recipe.recipe)}
+            onClick={() => saveRecipeHandler(recipe.recipe, recipeIndex)}
+            disabled={isSaved[recipeIndex]}
             className="absolute top-8 right-4 text-3xl text-white"
           >
-            {isActive ? (
-              <i className="fa-solid fa-bookmark"></i>
+            {isActive[recipeIndex] ? (
+              <div className=" px-4 text-[14px] bg-green-500">Saved</div>
             ) : (
               <i className="fa-regular fa-bookmark"></i>
             )}
@@ -77,6 +107,6 @@ const Recipes = function () {
       ))}
     </div>
   );
-};
+});
 
 export default Recipes;
