@@ -9,6 +9,9 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
   const [isActive, setIsActive] = useState<any>({});
   const [NutritionAnalysis,setNutritionAnalysis] = useState<any>(null)
+  const [recipeOptimization,setRecipeOptimization] = useState<any>(null)
+  const [recipeInstructions,setRecipeInstructions] = useState<any>(null)
+
   
 
 
@@ -75,12 +78,12 @@ try {
     }
   };
 
-  // Testing ai handler
+  // Nutrition analysis handler 
 
-  const aiHandler = async(recipe:any) => {
+  const analysisHandler = async(recipe:any) => {
     console.log("this is in the ai handler",recipe)
     try {
-      const response = await axios.post("http://localhost:3000/api/open-ai",{
+      const response = await axios.post("http://localhost:3000/api/analysis",{
         recipe : recipe
       
     })
@@ -89,8 +92,43 @@ try {
     } catch (error) {
       
     }
+  }
+
+  // Recipe optimization handler
+   const optimizationHandler = async(recipe:any) => {
+    console.log("this is in the ai handler",recipe)
+    try {
+      const response = await axios.post("http://localhost:3000/api/analysis",{
+        recipe : recipe
+      
+    })
+      console.log("THIS IS THE RESPONSE FROM AI ",response)
+      setRecipeOptimization(response.data)
+    } catch (error) {
+      
+    }
+  }
+
+// Recipe instructions handler
+
+ const instructionsHandler = async(recipe:any) => {
+    console.log("this is in the ai handler",recipe)
+    try {
+      const response = await axios.post("http://localhost:3000/api/analysis",{
+        recipe : recipe
+      
+    })
+      console.log("THIS IS THE RESPONSE FROM AI ",response)
+      setRecipeInstructions(response.data)
+    } catch (error) {
+      
+    }
 
   }
+
+
+
+
 
   return (
     <RecipeContext.Provider value={{ 
@@ -101,9 +139,15 @@ try {
       setFetchedRecipe,
       isActive,
       setIsActive,
-      aiHandler,
+      analysisHandler,
+      optimizationHandler,
+      instructionsHandler,
       NutritionAnalysis,
-      setNutritionAnalysis
+      setNutritionAnalysis,
+      recipeOptimization,
+      setRecipeOptimization,
+      recipeInstructions,
+      setRecipeInstructions
     }}>
       {children}
     </RecipeContext.Provider>

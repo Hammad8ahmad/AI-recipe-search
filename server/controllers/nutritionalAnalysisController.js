@@ -1,13 +1,13 @@
-const { fetchRecipesFromOpenAI } = require("../Services/openAiService");
+const { fetchNutritionalAnalysisFromOpenAI } = require("../Services/nutritionalAnalysis");
 
 
 
-const getResponseFromAi = async(req,res,next) => {
+const getAnalysisfromAi = async(req,res,next) => {
 
     try {
     const recipe = req.body;
     console.log("this is in the server",recipe)
-    const aiResponse = await fetchRecipesFromOpenAI(recipe)
+    const aiResponse = await fetchNutritionalAnalysisFromOpenAI(recipe)
     console.log("//////////////////////");
     console.log("AI REPSONSE IN CONTROLER",aiResponse)
     console.log("//////////////////////");
@@ -21,4 +21,4 @@ const getResponseFromAi = async(req,res,next) => {
 
 }
 
-module.exports = getResponseFromAi
+module.exports = getAnalysisfromAi

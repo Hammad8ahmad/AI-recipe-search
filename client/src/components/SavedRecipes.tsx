@@ -1,21 +1,11 @@
-import { useState } from 'react';
 import { useRecipeContext } from '../context/RecipeContext';
-import { div } from 'framer-motion/client';
+import SavedRecipe from './savedRecipes/savedRecipe';
 
 const SavedRecipes = () => {
-  const { savedRecipes, deleteRecipe, aiHandler, NutritionAnalysis } = useRecipeContext();
-  const [activeRecipeId, setActiveRecipeId] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { savedRecipes } = useRecipeContext();
+ 
 
-  const handleAiClick = async (recipe : any) => {
-    setLoading(true);
-    setActiveRecipeId(recipe.id);
-    await aiHandler(recipe);
-    setLoading(false);
-  };
 
-  console.log('Saved recipes check:', savedRecipes);
-  console.log('Nutritional analysis:', NutritionAnalysis);
 
   return (
     <div>
@@ -23,91 +13,11 @@ const SavedRecipes = () => {
         Saved Recipes
       </h1>
 
+      {/* Saved recipes component  */}
+
       {savedRecipes.length > 0 ? (
-        <div className="w-full grid grid-cols-2 px-2 mx-auto mt-4 gap-4">
-          {savedRecipes.map((recipe : any) => (
-            <div
-              key={recipe.id}
-              className="relative w-full rounded-lg p-8 bg-[#3A4A33] shadow-lg flex flex-col items-center text-center"
-            >
-              <h1 className="text-4xl font-mono font-light mb-4">{recipe.label}</h1>
-              <div className="ingredients w-full flex flex-col items-center">
-                <h2 className="text-2xl font-semibold mb-2 text-[#333333]">Ingredients</h2>
-                <ul className="list-disc text-[#fefae0] pl-5 text-left">
-                  {recipe.ingredients.map((ingredient : any ) => (
-                    <li className="pt-2" >{ingredient.text}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="text-white text-xl mt-4 font-mono font-extralight mb-4">
-                Calories: {Math.round(recipe.calories)}
-              </div>
-              <img
-                className="rounded-full w-[150px] h-[150px] border border-black object-cover mb-4"
-                src={recipe.image_url}
-                alt="Recipe image"
-              />
-              <div className='flex justify-between items-center gap-2'>
-              <button
-                onClick={() => handleAiClick(recipe)}
-                className="relative px-4 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 overflow-hidden shadow-lg hover:from-indigo-600 hover:to-blue-500 transition-all duration-300 ease-in-out"
-              >
-                <span className="absolute inset-0 bg-white opacity-30 blur-md rounded-lg"></span>
-                <span className="relative z-10">✨ Nutrition Insights</span>
-              </button>
-
-              <button
-                onClick={() => handleAiClick(recipe)}
-                className="relative px-4 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 overflow-hidden shadow-lg hover:from-indigo-600 hover:to-blue-500 transition-all duration-300 ease-in-out"
-              >
-                <span className="absolute inset-0 bg-white opacity-30 blur-md rounded-lg"></span>
-                <span className="relative z-10">✨ Recipe Optimization</span>
-              </button>
-
-              <button
-                onClick={() => handleAiClick(recipe)}
-                className="relative px-4 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 overflow-hidden shadow-lg hover:from-indigo-600 hover:to-blue-500 transition-all duration-300 ease-in-out"
-              >
-                <span className="absolute inset-0 bg-white opacity-30 blur-md rounded-lg"></span>
-                <span className="relative z-10">✨ Instructions</span>
-              </button>
-              </div>
-
-              {activeRecipeId === recipe.id && (
-                <div>
-                  {loading ? (
-                    <div className="flex justify-center items-center space-x-2">
-                      <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                      <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                      <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
-                    </div>
-                  ) : 
-                    <div>
-                     {NutritionAnalysis ? (
-                      <>
-                      <h3 className="text-2xl font-semibold underline decoration-amber-400 mb-2">Macros</h3>
-                      <ul className="list-disc pl-6 text-lg space-y-2">
-                        <li>Carbs: <span className="font-bold text-amber-300">{NutritionAnalysis.macros.carbohydrates}</span></li>
-                        <li>Protein: <span className="font-bold text-amber-300">{NutritionAnalysis.macros.protein}</span></li>
-                        <li>Fat: <span className="font-bold text-amber-300">{NutritionAnalysis.macros.fat}</span></li>
-                      </ul>
-                      </>) : <div>API LIMIT REACHED :(</div>}
-                    </div>
-                  }
-                </div>
-              )}
-
-              <div className="mt-auto absolute bottom-4 right-4 pt-4">
-                <button
-                  className="px-4 py-2 outline-none bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
-                  onClick={() => deleteRecipe(recipe.id)}
-                >
-                  🗑 Delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <SavedRecipe/>
+       
       ) : (
         <p className="text-gray-500 text-center mt-8">No saved recipes yet.</p>
       )}

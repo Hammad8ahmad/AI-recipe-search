@@ -5,7 +5,9 @@ const dotenv = require("dotenv");
 const errorHandler = require("./errorMiddleware");
 const recipeRoutes = require("./Routes/recipeRoutes")
 const edamamApiRoute = require("./Routes/edamamApiRoute");
-const openAiApiRoute = require("./Routes/openAiApiRoute")
+const getAnalysisFromAi = require("./Routes/nutritionalAnalysisRoute");
+const getRecipeOptimizationfromAi = require("./controllers/recipeOptimizationController");
+const getInstructionsFromAi = require("./controllers/recipeInstructionsController");
 
 
 // Cors 
@@ -21,7 +23,9 @@ app.use(express.json());
 // Attach error handling middleware
 
 app.use("/api/recipe-search",edamamApiRoute)
-app.use("/api/open-ai",openAiApiRoute)
+app.use("/api/analysis",getAnalysisFromAi)
+app.use("/api/optimization",getRecipeOptimizationfromAi)
+app.use("/api/instructions",getInstructionsFromAi)
 app.use("/api/recipes",recipeRoutes)
 app.use(errorHandler);
 app.listen(process.env.PORT, () => {

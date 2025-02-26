@@ -1,6 +1,6 @@
 const OpenAI = require("openai");
 
-const fetchRecipesFromOpenAI = async (recipe) => {
+const fetchNutritionalAnalysisFromOpenAI = async (recipe) => {
   console.log("this is inside the service",recipe.recipe.ingredients)
   const token = process.env["GITHUB_TOKEN"]; // Use OpenAI API key
 
@@ -56,4 +56,4 @@ important : Dont say anything else just give me the pure json
   return JSON.parse(cleanedResponse);
 };
 
-module.exports = { fetchRecipesFromOpenAI};
+module.exports = { fetchNutritionalAnalysisFromOpenAI};
