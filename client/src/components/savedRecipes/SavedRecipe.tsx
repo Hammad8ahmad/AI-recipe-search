@@ -5,39 +5,67 @@ import AiContent from "./AiContent";
 
 
 const SavedRecipe = () => {
-  
+  const [NutritionAnalysis,setNutritionAnalysis] = useState<any>(null)
+  const [recipeOptimization,setRecipeOptimization] = useState<any>(null)
+  const [recipeInstructions,setRecipeInstructions] = useState<any>(null)
+  const [activeFeature,setActiveFeature] = useState<String>("")
 const { savedRecipes, deleteRecipe,analysisHandler,
-        optimizationHandler,instructionsHandler, NutritionAnalysis,
-        recipeOptimization,recipeInstructions
+        optimizationHandler,instructionsHandler,} = useRecipeContext();
 
-} = useRecipeContext();
 const [activeRecipeId, setActiveRecipeId] = useState(null);
-const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(false);''
 
-  const handleAnalysis = async (recipe : any) => {
-    setLoading(true);
-    setActiveRecipeId(recipe.id);
-    await analysisHandler(recipe);
-    setLoading(false);
-  };
-  const handleOptimization = async (recipe : any) => {
-    setLoading(true);
-    setActiveRecipeId(recipe.id);
-    await optimizationHandler(recipe);
-    setLoading(false);
-  };
+const handleAnalysis = async (recipe: any) => {
+  if (activeRecipeId === recipe.id && NutritionAnalysis) {
+    setActiveFeature("analysis");
+    return; // Skip refetch if data already exists
+  }
 
-  const handleInstructions = async (recipe : any) => {
-    setLoading(true);
-    setActiveRecipeId(recipe.id);
-    await instructionsHandler(recipe);
-    setLoading(false);
-  };
+  setLoading(true);
+  setActiveFeature("analysis");
+  setActiveRecipeId(recipe.id);
+  
+  const analysis = await analysisHandler(recipe);
+  setNutritionAnalysis(analysis);
 
+  setLoading(false);
+};
+
+const handleOptimization = async (recipe: any) => {
+  if (activeRecipeId === recipe.id && recipeOptimization) {
+    setActiveFeature("optimization");
+    return;
+  }
+
+  setLoading(true);
+  setActiveFeature("optimization");
+  setActiveRecipeId(recipe.id);
+
+  const optimization = await optimizationHandler(recipe);
+  setRecipeOptimization(optimization);
+
+  setLoading(false);
+};
+
+const handleInstructions = async (recipe: any) => {
+  if (activeRecipeId === recipe.id && recipeInstructions) {
+    setActiveFeature("instructions");
+    return;
+  }
+
+  setLoading(true);
+  setActiveFeature("instructions");
+  setActiveRecipeId(recipe.id);
+
+  const instructions = await instructionsHandler(recipe);
+  setRecipeInstructions(instructions);
+
+  setLoading(false);
+};
 
     return <>
 
-    <div className="w-full grid grid-cols-2 px-2 mx-auto mt-4 gap-4">
+    <div className="w-full  grid grid-cols- px-2 mx-auto mt-4 gap-4">
           {savedRecipes.map((recipe : any) => (
             <div
               key={recipe.id}
@@ -78,6 +106,7 @@ const [loading, setLoading] = useState(false);
                 NutritionAnalysis={NutritionAnalysis}
                 recipeOptimization={recipeOptimization}
                 recipeInstructions={recipeInstructions}
+                activeFeature={activeFeature}
                 />
                 
               )}

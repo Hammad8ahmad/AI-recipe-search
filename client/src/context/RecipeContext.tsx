@@ -8,10 +8,6 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
   const [isActive, setIsActive] = useState<any>({});
-  const [NutritionAnalysis,setNutritionAnalysis] = useState<any>(null)
-  const [recipeOptimization,setRecipeOptimization] = useState<any>(null)
-  const [recipeInstructions,setRecipeInstructions] = useState<any>(null)
-
   
 
 
@@ -87,8 +83,8 @@ try {
         recipe : recipe
       
     })
-      console.log("THIS IS THE RESPONSE FROM AI ",response)
-      setNutritionAnalysis(response.data)
+      console.log("THIS IS THE RESPONSE FROM ANALYSIS HANDLER ",response)
+      return response.data
     } catch (error) {
       
     }
@@ -98,12 +94,12 @@ try {
    const optimizationHandler = async(recipe:any) => {
     console.log("this is in the ai handler",recipe)
     try {
-      const response = await axios.post("http://localhost:3000/api/analysis",{
+      const response = await axios.post("http://localhost:3000/api/optimization",{
         recipe : recipe
       
     })
-      console.log("THIS IS THE RESPONSE FROM AI ",response)
-      setRecipeOptimization(response.data)
+      console.log("THIS IS THE RESPONSE FROM OPTIMIZATION HANDLER ",response)
+      return response.data
     } catch (error) {
       
     }
@@ -114,12 +110,12 @@ try {
  const instructionsHandler = async(recipe:any) => {
     console.log("this is in the ai handler",recipe)
     try {
-      const response = await axios.post("http://localhost:3000/api/analysis",{
+      const response = await axios.post("http://localhost:3000/api/instructions",{
         recipe : recipe
       
     })
-      console.log("THIS IS THE RESPONSE FROM AI ",response)
-      setRecipeInstructions(response.data)
+      console.log("THIS IS THE RESPONSE FROM INSTRUCTION HANDLER ",response)
+      return response.data
     } catch (error) {
       
     }
@@ -142,12 +138,6 @@ try {
       analysisHandler,
       optimizationHandler,
       instructionsHandler,
-      NutritionAnalysis,
-      setNutritionAnalysis,
-      recipeOptimization,
-      setRecipeOptimization,
-      recipeInstructions,
-      setRecipeInstructions
     }}>
       {children}
     </RecipeContext.Provider>
