@@ -65,7 +65,7 @@ const handleInstructions = async (recipe: any) => {
 
     return <>
 
-    <div className="w-full  grid grid-cols- px-2 mx-auto mt-4 gap-4">
+    <div className="w-full max-w-3xl  grid px-2 mx-auto mt-4 gap-4">
           {savedRecipes.map((recipe : any) => (
             <div
               key={recipe.id}
@@ -110,15 +110,24 @@ const handleInstructions = async (recipe: any) => {
                 />
                 
               )}
+              <div className="flex justify-end items-end w-full mt-auto pt-4">
+  <button
+    className="px-4 py-2 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
+    onClick={() => deleteRecipe(recipe.id)}
+  >
+    🗑 Delete
+  </button>
+</div>
 
-              <div className="mt-auto absolute bottom-4 right-4 pt-4">
+
+              {/* <div className="mt-auto absolute bottom-4 right-4 pt-4">
                 <button
                   className="px-4 py-2 outline-none bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
                   onClick={() => deleteRecipe(recipe.id)}
                 >
                   🗑 Delete
                 </button>
-              </div>
+              </div> */}
 
             </div>
           ))}

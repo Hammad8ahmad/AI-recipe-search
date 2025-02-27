@@ -1,5 +1,5 @@
 import { useRecipeContext } from '../context/RecipeContext';
-import SavedRecipe from './savedRecipes/savedRecipe';
+import SavedRecipe from "./savedRecipes/SavedRecipe"
 
 const SavedRecipes = () => {
   const { savedRecipes } = useRecipeContext();

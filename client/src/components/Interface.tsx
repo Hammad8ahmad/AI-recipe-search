@@ -55,7 +55,7 @@ function Interface() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <main className="flex-grow mb-4">
         <Header />
 

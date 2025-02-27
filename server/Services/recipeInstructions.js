@@ -27,7 +27,7 @@ Provide instructions in this format:
 
 {
   "recipe": "Recipe Name",
-  "simplified_instructions": ["Step 1", "Step 2", "Step 3", "..."],
+  "simplified_instructions": ["List of instructions],
   "cooking_tips": ["Extra tips for better results"],
   "time_estimate": "Estimated time to prepare and cook"
 }
