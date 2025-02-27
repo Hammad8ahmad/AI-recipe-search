@@ -8,12 +8,19 @@ const SavedRecipe = () => {
   const [NutritionAnalysis,setNutritionAnalysis] = useState<any>(null)
   const [recipeOptimization,setRecipeOptimization] = useState<any>(null)
   const [recipeInstructions,setRecipeInstructions] = useState<any>(null)
+  const [showDeleteToast,setShowDeleteToast] = useState<any>(null)
   const [activeFeature,setActiveFeature] = useState<String>("")
 const { savedRecipes, deleteRecipe,analysisHandler,
-        optimizationHandler,instructionsHandler,} = useRecipeContext();
+        optimizationHandler,instructionsHandler} = useRecipeContext();
 
 const [activeRecipeId, setActiveRecipeId] = useState(null);
-const [loading, setLoading] = useState(false);''
+const [loading, setLoading] = useState(false);
+
+const deleteHandler = ()=> {
+         setShowDeleteToast(true);
+    setTimeout(() => setShowDeleteToast(false), 3000); // Hide after 3s
+
+}
 
 const handleAnalysis = async (recipe: any) => {
   if (activeRecipeId === recipe.id && NutritionAnalysis) {
@@ -71,7 +78,7 @@ const handleInstructions = async (recipe: any) => {
               key={recipe.id}
               className="relative w-full rounded-lg p-8 bg-[#3A4A33] shadow-lg flex flex-col items-center text-center"
             >
-              <h1 className="text-4xl font-mono font-light mb-4">{recipe.label}</h1>
+              <h1 className="text-4xl text-[#fefae0] font-mono font-light mb-4">{recipe.label}</h1>
               <div className="ingredients w-full flex flex-col items-center">
                 <h2 className="text-2xl font-semibold mb-2 text-[#333333]">Ingredients</h2>
                 <ul className="list-disc text-[#fefae0] pl-5 text-left">
@@ -110,6 +117,8 @@ const handleInstructions = async (recipe: any) => {
                 />
                 
               )}
+
+
               <div className="flex justify-end items-end w-full mt-auto pt-4">
   <button
     className="px-4 py-2 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
@@ -118,6 +127,12 @@ const handleInstructions = async (recipe: any) => {
     🗑 Delete
   </button>
 </div>
+
+      {showDeleteToast && (
+  <div className="fixed bottom-4  right-18 sm:right-12 md:right-6 z-50 bg-red-600 text-white px-6 py-3 rounded-lg shadow-xl animate-fade-in-out flex items-center gap-2">
+    <span className="font-medium">Recipe deleted successfully!</span>
+  </div>
+)}
 
 
               {/* <div className="mt-auto absolute bottom-4 right-4 pt-4">
@@ -132,6 +147,8 @@ const handleInstructions = async (recipe: any) => {
             </div>
           ))}
         </div>
+
+         
     
     </>
 }

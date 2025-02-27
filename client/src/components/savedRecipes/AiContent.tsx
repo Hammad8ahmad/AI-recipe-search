@@ -63,24 +63,24 @@ const AiContent = ({ loading, NutritionAnalysis, recipeOptimization,activeFeatur
             <>
             <div className="flex justify-between gap-x-20  ">
               <div>
-              <h3 className="text-2xl mt-4 font-semibold mb-2">Macros</h3>
+              <h3 className="text-3xl text-[#333333] px-4 py-2 bg-[#a0b56d] mt-4 font-semibold mb-2">Macros</h3>
               <ul className="list-disc text-left  text-lg ">
-                <li>Carbs: {NutritionAnalysis.macros.carbohydrates}</li>
-                <li>Protein: {NutritionAnalysis.macros.protein}</li>
-                <li>Fat: {NutritionAnalysis.macros.fat}</li>
+                <li>Carbs: {NutritionAnalysis.macros.carbohydrates}g</li>
+                <li>Protein: {NutritionAnalysis.macros.protein}g</li>
+                <li>Fat: {NutritionAnalysis.macros.fat}g</li>
               </ul>
               </div>
               <div>
-              <h3 className="text-2xl mt-4 font-semibold  mb-2" >Micronutrients</h3>
+              <h3 className="text-3xl text-[#333333] px-4 py-2 bg-[#a0b56d] mt-4 font-semibold  mb-2" >Micronutrients</h3>
               <h4 className="text-xl bg-[#a0b56d] mt-4 font-semibold  mb-2">Minerals</h4>
               <ul className="list-disc   text-lg ">
               {NutritionAnalysis.micronutrients.minerals.map((item:any) => {
-                return <li className="font-bold text-left">{item}</li>
+                return <li className=" text-left">{item}</li>
               })}</ul>
               <h3 className="text-xl bg-[#a0b56d] mt-4 font-semibold mb-2">Vitamins</h3>
               <ul className="list-disc  text-lg ">
                 {NutritionAnalysis.micronutrients.vitamins.map((item:any) => {
-                  return <li className="font-bold text-left">{item}</li>
+                  return <li className=" text-left">{item}</li>
                 })}
              </ul>
              </div>

@@ -4,6 +4,8 @@ import React, { useState,useEffect} from "react";
 const Recipes = React.memo(() => {
   const { fetchedRecipe, saveRecipe, isActive, setIsActive } = useRecipeContext();
   const [isSaved,setIsSaved] = useState<any>(false)
+  const [showSavedToast, setShowSavedToast] = useState(false);
+
 
 
   if (!fetchedRecipe) return null;
@@ -49,6 +51,8 @@ const Recipes = React.memo(() => {
 
     // Await the save operation
     await saveRecipe(recipe);
+    setShowSavedToast(true);
+    setTimeout(() => setShowSavedToast(false), 3000); // Hide after 3s
 
     // After successful save, mark the recipe as saved
     setIsSaved((prev: any) => ({ ...prev, [recipeIndex]: true }));
@@ -81,8 +85,15 @@ const Recipes = React.memo(() => {
             )}
           </button>
 
+                     {showSavedToast && (
+  <div className="fixed bottom-4  right-18 sm:right-12 md:right-6 z-50 bg-green-600 text-white px-6 py-3 rounded-lg shadow-xl animate-fade-in-out flex items-center gap-2">
+    <span className="font-medium">Recipe saved successfully!</span>
+  </div>
+)}
+
+
           {/* Recipe title */}
-          <h1 className="text-4xl  font-mono font-light mb-4">
+          <h1 className="text-3xl sm:text-3xl md:text-4xl  text-[#FEFAE0]  font-mono font-light mb-4">
             {recipe.recipe.label}
           </h1>
 

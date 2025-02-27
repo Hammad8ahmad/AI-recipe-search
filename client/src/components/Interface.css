@@ -109,9 +109,6 @@ p {
 .mr-2 {
   margin-right: 0.5rem;
 }
-.text-4xl {
-  color: #fefae0;
-}
 /* Recipe Card */
 .items {
   background-color: white;
@@ -293,3 +290,36 @@ p {
 
 
 
+/* 
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .blink {
+    animation: blink .5s infinite;
+  } */
+
+   @keyframes grow {
+    0%, 100% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
+
+  .animate-grow {
+    animation: grow 0.5s ease-in-out infinite;
+  }
+
+  @keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-out {
+  animation: fadeInOut 3s ease-in-out;
+}

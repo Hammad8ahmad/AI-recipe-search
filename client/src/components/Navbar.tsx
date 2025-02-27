@@ -7,7 +7,7 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#a0b56d] text-black p-3 shadow-md">
+    <nav className="sticky top-0 z-40 bg-[#a0b56d] text-black p-3 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo / Title with Fade-In Effect */}
         <motion.div

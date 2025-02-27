@@ -8,6 +8,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
   const [isActive, setIsActive] = useState<any>({});
+  const [showDeleteToast,setShowDeleteToast] = useState<any>(false)
   
 
 
@@ -68,10 +69,17 @@ try {
     try {
       await axios.delete(`http://localhost:3000/api/recipes/${id}`);
       // setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
-      await fetchSavedRecipes()
+
+
+      // await fetchSavedRecipes()
+    setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
+
+     
+      
     } catch (error) {
       console.log("Error deleting recipe:", error);
     }
+   
   };
 
   // Nutrition analysis handler 
@@ -130,7 +138,9 @@ try {
     <RecipeContext.Provider value={{ 
       savedRecipes, 
       saveRecipe, 
-      deleteRecipe, 
+      deleteRecipe,
+      showDeleteToast,
+      setShowDeleteToast, 
       fetchedRecipe, 
       setFetchedRecipe,
       isActive,
