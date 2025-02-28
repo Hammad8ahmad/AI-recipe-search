@@ -3,153 +3,127 @@ import { useRecipeContext } from "../../context/RecipeContext";
 import AiButtons from "./AiButtons";
 import AiContent from "./AiContent";
 
+const SavedRecipe = ({deleteHandler} : any) => {
+  const [NutritionAnalysis, setNutritionAnalysis] = useState(null);
+  const [recipeOptimization, setRecipeOptimization] = useState(null);
+  const [recipeInstructions, setRecipeInstructions] = useState(null);
+  const [activeFeature, setActiveFeature] = useState("");
+  const { savedRecipes, analysisHandler, optimizationHandler, instructionsHandler } = useRecipeContext();
 
-const SavedRecipe = () => {
-  const [NutritionAnalysis,setNutritionAnalysis] = useState<any>(null)
-  const [recipeOptimization,setRecipeOptimization] = useState<any>(null)
-  const [recipeInstructions,setRecipeInstructions] = useState<any>(null)
-  const [showDeleteToast,setShowDeleteToast] = useState<any>(null)
-  const [activeFeature,setActiveFeature] = useState<String>("")
-const { savedRecipes, deleteRecipe,analysisHandler,
-        optimizationHandler,instructionsHandler} = useRecipeContext();
+  const [activeRecipeId, setActiveRecipeId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-const [activeRecipeId, setActiveRecipeId] = useState(null);
-const [loading, setLoading] = useState(false);
-
-const deleteHandler = ()=> {
-         setShowDeleteToast(true);
-    setTimeout(() => setShowDeleteToast(false), 3000); // Hide after 3s
-
-}
-
-const handleAnalysis = async (recipe: any) => {
-  if (activeRecipeId === recipe.id && NutritionAnalysis) {
-    setActiveFeature("analysis");
-    return; // Skip refetch if data already exists
-  }
-
-  setLoading(true);
-  setActiveFeature("analysis");
-  setActiveRecipeId(recipe.id);
   
-  const analysis = await analysisHandler(recipe);
-  setNutritionAnalysis(analysis);
 
-  setLoading(false);
-};
+  const handleAnalysis = async (recipe:any) => {
+    if (activeRecipeId === recipe.id && NutritionAnalysis) {
+      setActiveFeature("analysis");
+      return; // Skip refetch if data already exists
+    }
 
-const handleOptimization = async (recipe: any) => {
-  if (activeRecipeId === recipe.id && recipeOptimization) {
+    setLoading(true);
+    setActiveFeature("analysis");
+    setActiveRecipeId(recipe.id);
+
+    const analysis = await analysisHandler(recipe);
+    setNutritionAnalysis(analysis);
+
+    setLoading(false);
+  };
+
+  const handleOptimization = async (recipe:any) => {
+    if (activeRecipeId === recipe.id && recipeOptimization) {
+      setActiveFeature("optimization");
+      return;
+    }
+
+    setLoading(true);
     setActiveFeature("optimization");
-    return;
-  }
+    setActiveRecipeId(recipe.id);
 
-  setLoading(true);
-  setActiveFeature("optimization");
-  setActiveRecipeId(recipe.id);
+    const optimization = await optimizationHandler(recipe);
+    setRecipeOptimization(optimization);
 
-  const optimization = await optimizationHandler(recipe);
-  setRecipeOptimization(optimization);
+    setLoading(false);
+  };
 
-  setLoading(false);
-};
+  const handleInstructions = async (recipe:any) => {
+    if (activeRecipeId === recipe.id && recipeInstructions) {
+      setActiveFeature("instructions");
+      return;
+    }
 
-const handleInstructions = async (recipe: any) => {
-  if (activeRecipeId === recipe.id && recipeInstructions) {
+    setLoading(true);
     setActiveFeature("instructions");
-    return;
-  }
+    setActiveRecipeId(recipe.id);
 
-  setLoading(true);
-  setActiveFeature("instructions");
-  setActiveRecipeId(recipe.id);
+    const instructions = await instructionsHandler(recipe);
+    setRecipeInstructions(instructions);
 
-  const instructions = await instructionsHandler(recipe);
-  setRecipeInstructions(instructions);
+    setLoading(false);
+  };
 
-  setLoading(false);
-};
-
-    return <>
-
-    <div className="w-full max-w-3xl  grid px-2 mx-auto mt-4 gap-4">
-          {savedRecipes.map((recipe : any) => (
-            <div
-              key={recipe.id}
-              className="relative w-full rounded-lg p-8 bg-[#3A4A33] shadow-lg flex flex-col items-center text-center"
-            >
-              <h1 className="text-4xl text-[#fefae0] font-mono font-light mb-4">{recipe.label}</h1>
-              <div className="ingredients w-full flex flex-col items-center">
-                <h2 className="text-2xl font-semibold mb-2 text-[#333333]">Ingredients</h2>
-                <ul className="list-disc text-[#fefae0] pl-5 text-left">
-                  {recipe.ingredients.map((ingredient : any ) => (
-                    <li className="pt-2" >{ingredient.text}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="text-white text-xl mt-4 font-mono font-extralight mb-4">
-                Calories: {Math.round(recipe.calories)}
-              </div>
-              <img
-                className="rounded-full w-[150px] h-[150px] border border-black object-cover mb-4"
-                src={recipe.image_url}
-                alt="Recipe image"
-              />
-
-              {/* AI Buttons */}
-
-              <AiButtons
-            recipe={recipe}
-            handleAnalysis={handleAnalysis}
-            handleOptimization={handleOptimization}
-            handleInstructions={handleInstructions}
-          />
-
-              {/* AI Content*/}
-
-              {activeRecipeId === recipe.id && (
-                <AiContent
+  return (
+    <>
+      <div className="w-full max-w-4xl grid grid-col-1 px-2 mx-auto mt-4 gap-4">
+        {savedRecipes.map((recipe:any) => (
+          <div
+            key={recipe.id}
+            className="relative w-full rounded-lg p-8 bg-[#3A4A33] shadow-lg flex flex-col items-center text-center"
+          >
+            <h1 className="text-4xl text-[#fefae0] font-mono font-light mb-4">
+              {recipe.label}
+            </h1>
+            <div className="ingredients w-full flex flex-col items-center">
+              <h2 className="text-2xl font-semibold mb-2 text-[#333333]">
+                Ingredients
+              </h2>
+              <ul className="list-disc text-[#fefae0] pl-5 text-left">
+                {recipe.ingredients.map((ingredient:any) => (
+                  <li key={ingredient.text} className="pt-2">
+                    {ingredient.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="text-white text-xl mt-4 font-mono font-extralight mb-4">
+              Calories: {Math.round(recipe.calories)}
+            </div>
+            <img
+              className="rounded-full w-[150px] h-[150px] border border-black object-cover mb-4"
+              src={recipe.image_url}
+              alt="Recipe image"
+            />
+            <AiButtons
+              recipe={recipe}
+              handleAnalysis={handleAnalysis}
+              handleOptimization={handleOptimization}
+              handleInstructions={handleInstructions}
+            />
+            {activeRecipeId === recipe.id && (
+              <AiContent
                 loading={loading}
                 NutritionAnalysis={NutritionAnalysis}
                 recipeOptimization={recipeOptimization}
                 recipeInstructions={recipeInstructions}
                 activeFeature={activeFeature}
-                />
-                
-              )}
-
-
-              <div className="flex justify-end items-end w-full mt-auto pt-4">
-  <button
-    className="px-4 py-2 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
-    onClick={() => deleteRecipe(recipe.id)}
-  >
-    🗑 Delete
-  </button>
-</div>
-
-      {showDeleteToast && (
-  <div className="fixed bottom-4  right-18 sm:right-12 md:right-6 z-50 bg-red-600 text-white px-6 py-3 rounded-lg shadow-xl animate-fade-in-out flex items-center gap-2">
-    <span className="font-medium">Recipe deleted successfully!</span>
-  </div>
-)}
-
-
-              {/* <div className="mt-auto absolute bottom-4 right-4 pt-4">
-                <button
-                  className="px-4 py-2 outline-none bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
-                  onClick={() => deleteRecipe(recipe.id)}
-                >
-                  🗑 Delete
-                </button>
-              </div> */}
-
+              />
+            )}
+            <div className="flex justify-end items-end w-full mt-auto pt-4">
+              <button
+                className="px-4 py-2 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-all duration-200 ease-in-out"
+                onClick={() => deleteHandler(recipe.id)}
+              >
+                🗑 Delete
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
-         
-    
+      
     </>
-}
+  );
+};
+
 export default SavedRecipe;
