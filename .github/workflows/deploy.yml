@@ -33,5 +33,5 @@ jobs:
           script: |
             cd /root/AI-Recipe-Search-backend
             docker-compose down
-            docker pull hammad123/ai-recipe-search-backend:latest
+            docker pull hammadahmad27/ai-recipe-search-backend:latest
             docker-compose up -d
