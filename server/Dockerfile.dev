@@ -1,0 +1,26 @@
+# Use official Node.js image
+FROM node:21-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Install nodemon globally for hot reloading
+RUN npm install -g nodemon
+
+# Copy source code
+COPY . .
+
+# Expose port for Express server
+EXPOSE 3000
+
+# Use .env file for config
+ENV NODE_ENV=development
+
+# Run dev server with hot reloading (using nodemon)
+CMD ["npm","start"]
