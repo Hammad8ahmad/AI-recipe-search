@@ -17,7 +17,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        run: echo "${ secrets.DOCKER_PASSWORD }" | docker login -u "${ secrets.DOCKER_USERNAME }" --password-stdin
 
       - name: Build and push Docker image
         run: |
@@ -27,11 +27,11 @@ jobs:
       - name: SSH into DigitalOcean and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DROPLET_IP }}
+          host: ${ secrets.DROPLET_IP }
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${ secrets.SSH_PRIVATE_KEY }
           script: |
             cd /root/AI-Recipe-Search-backend
             docker-compose down
-            docker pull hammadahmad27/ai-recipe-search-backend:latest
+            docker pull hammad123/ai-recipe-search-backend:latest
             docker-compose up -d
