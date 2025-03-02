@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./interface.css";
+import "./Interface.css";
 import axios from "axios";
 import { OrbitProgress } from "react-loading-indicators";
 import Recipes from "./Recipes";
