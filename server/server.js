@@ -30,6 +30,5 @@ app.use("/api/recipes",recipeRoutes)
 app.use(errorHandler);
 app.listen(process.env.PORT, () => {
   console.log("Server started listening at port 3000.");
-  console.log("just a test")
-  console.log("test");
+
 });
