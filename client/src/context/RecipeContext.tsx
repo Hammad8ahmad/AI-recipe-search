@@ -11,11 +11,12 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
   const [showDeleteToast,setShowDeleteToast] = useState<any>(false)
   
 
+  const url = import.meta.env.VITE_PROD_URL + "/api"; // If using Vite
 
 
    const fetchSavedRecipes = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/recipes");
+        const response = await axios.get(`${url}/recipes`);
         console.log("this is the data which is coming when we fetch the saved recipes : ",response.data)
         setSavedRecipes(response.data); // Set fetched recipes to state
       } catch (error) {
@@ -42,7 +43,7 @@ export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
 
     
 try {
-     await axios.post("http://localhost:3000/api/recipes", {
+     await axios.post(`${url}/recipes`, {
        label : recipe.label,
         ingredients:recipe.ingredients.map((ingredient : any) => ({
           text : ingredient.text,
@@ -67,7 +68,7 @@ try {
   // Delete Recipe
   const deleteRecipe = async (id: any) => {
     try {
-      await axios.delete(`http://localhost:3000/api/recipes/${id}`);
+      await axios.delete(`${url}/recipes/${id}`);
       // setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
 
 
@@ -87,7 +88,7 @@ try {
   const analysisHandler = async(recipe:any) => {
     console.log("this is in the ai handler",recipe)
     try {
-      const response = await axios.post("http://localhost:3000/api/analysis",{
+      const response = await axios.post(`${url}/analysis`,{
         recipe : recipe
       
     })
@@ -102,7 +103,7 @@ try {
    const optimizationHandler = async(recipe:any) => {
     console.log("this is in the ai handler",recipe)
     try {
-      const response = await axios.post("http://localhost:3000/api/optimization",{
+      const response = await axios.post(`${url}/optimization`,{
         recipe : recipe
       
     })
@@ -118,7 +119,7 @@ try {
  const instructionsHandler = async(recipe:any) => {
     console.log("this is in the ai handler",recipe)
     try {
-      const response = await axios.post("http://localhost:3000/api/instructions",{
+      const response = await axios.post(`${url}/instructions`,{
         recipe : recipe
       
     })

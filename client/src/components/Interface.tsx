@@ -13,8 +13,11 @@ function Interface() {
   const [item, setItem] = useState("");
 
   const { fetchedRecipe, setFetchedRecipe, } = useRecipeContext();
+  const url = import.meta.env.VITE_PROD_URL + "/api";
+  console.log("this is the url : ",url)
 
-  const url = "http://localhost:3000/api/recipe-search";
+
+
 
   const handleChange = (e : any) => {
     setItem(e.target.value)
@@ -33,7 +36,7 @@ function Interface() {
     setLoading(true);
     setErrorMessage("");
     try {
-      const response = await axios.post(url, { items: item });
+      const response = await axios.post(`${url}/recipe-search`, { items: item });
       console.log("Data from backend:", response.data);
       setFetchedRecipe(response.data);
       setItem("");
