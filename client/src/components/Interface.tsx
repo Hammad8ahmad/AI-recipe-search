@@ -15,6 +15,7 @@ function Interface() {
   const { fetchedRecipe, setFetchedRecipe, } = useRecipeContext();
   const url = import.meta.env.VITE_PROD_URL + "/api";
   console.log("this is the url : ",url)
+  console.log("just a test")
 
 
 
