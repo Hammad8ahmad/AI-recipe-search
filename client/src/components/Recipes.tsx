@@ -50,6 +50,7 @@ const Recipes = React.memo(() => {
     setIsActive((prev: any) => ({ ...prev, [recipeIndex]: true }));
      setShowSavedToast(true);
     setTimeout(() => setShowSavedToast(false), 3000);
+    console.log("testing this")
 
     // Await the save operation
     await saveRecipe(recipe);
