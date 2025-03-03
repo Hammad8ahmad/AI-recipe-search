@@ -3,32 +3,48 @@ const cors = require("cors");
 const app = express();
 const dotenv = require("dotenv");
 const errorHandler = require("./errorMiddleware");
-const recipeRoutes = require("./Routes/recipeRoutes")
+const recipeRoutes = require("./Routes/recipeRoutes");
 const edamamApiRoute = require("./Routes/edamamApiRoute");
 const getAnalysisFromAi = require("./Routes/nutritionalAnalysisRoute");
 const getRecipeOptimizationfromAi = require("./controllers/recipeOptimizationController");
 const getInstructionsFromAi = require("./controllers/recipeInstructionsController");
 
+// Load environment variables
+dotenv.config();
 
-// Cors 
+// Define allowed origins for CORS
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://ai-recipe-search.vercel.app',
+  'https://ai-recipe-search.duckdns.org'
+];
+
+// Configure CORS options
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
-dotenv.config();
+// Use CORS middleware
 app.use(cors(corsOptions));
+
+// Parse JSON bodies
 app.use(express.json());
 
+// Define routes
+app.use("/api/recipe-search", edamamApiRoute);
+app.use("/api/analysis", getAnalysisFromAi);
+app.use("/api/optimization", getRecipeOptimizationfromAi);
+app.use("/api/instructions", getInstructionsFromAi);
+app.use("/api/recipes", recipeRoutes);
 
 // Attach error handling middleware
-
-app.use("/api/recipe-search",edamamApiRoute)
-app.use("/api/analysis",getAnalysisFromAi)
-app.use("/api/optimization",getRecipeOptimizationfromAi)
-app.use("/api/instructions",getInstructionsFromAi)
-app.use("/api/recipes",recipeRoutes)
 app.use(errorHandler);
-app.listen(process.env.PORT, () => {
-  console.log("Server started listening at port 3000.");
 
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server started listening at port ${PORT}.`);
 });
