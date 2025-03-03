@@ -3,40 +3,28 @@ name: Deploy to DigitalOcean
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Set up Docker Buildx for cross-platform builds
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # 3. Log in to Docker Hub
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      # 4. Build and push Docker image for the server
-      - name: Build and push Docker image
+      - name: Set up SSH key
         run: |
-          docker build -t hammad123/ai-recipe-search-backend:latest ./server
-          docker push hammad123/ai-recipe-search-backend:latest
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.DROPLET_IP }} >> ~/.ssh/known_hosts
 
-      # 5. SSH into DigitalOcean and deploy
-      - name: SSH into DigitalOcean and deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /root/AI-Recipe-Search-backend
-            docker-compose down
-            docker-compose pull
-            docker-compose up -d
+      - name: Deploy to Droplet
+        run: |
+          ssh -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_IP }} << 'EOF'
+            cd ~/AI-recipe-search
+            git pull origin master
+            docker compose down
+            docker compose up --build -d
+          EOF
