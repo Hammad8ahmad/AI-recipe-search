@@ -16,9 +16,7 @@ function Interface() {
   // const url = import.meta.env.VITE_PROD_URL + "/api";
   const url = import.meta.env.VITE_PROD_URL + "/api"
   console.log("this is the url : ",url)
-  console.log("just a test")
-  console.log("another test")
-  console.log("testing new url")
+ console.log("testing cors policy")
 
 
 
