@@ -15,6 +15,7 @@ dotenv.config();
 // Define allowed origins for CORS
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:5173',
   'https://ai-recipe-search.vercel.app',
   'https://ai-recipe-search.duckdns.org'
 ];
