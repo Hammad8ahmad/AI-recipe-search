@@ -65,11 +65,11 @@ function Interface() {
         <Header />
 
         {/* Search Form */}
-        <form className="max-w-[500px] mt-4 mx-auto" onSubmit={handleSubmit}>
+        <form className="max-w-[500px]  mt-4 mx-auto" onSubmit={handleSubmit}>
           <div className="flex items-center justify-center">
             <input
               placeholder="Enter your favourite dish, I'm sure we have it :)"
-              className="input-bar w-full"
+              className="input-bar mx-2 w-full"
               name="text"
               value={item}
               onChange={handleChange}
