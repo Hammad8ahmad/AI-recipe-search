@@ -48,9 +48,6 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server started listening at port ${PORT}.`);
-  console.log("just a test")
-  console.log("another test");
-  console.log("another test");
-  console.log("another test");
+  
 
 });
