@@ -70,6 +70,7 @@ const Recipes = React.memo(() => {
   }; 
 
   return (
+    <div className="mx-2">
     <div className="w-full max-w-2xl mx-auto mt-4 flex flex-col gap-6 justify-center items-center">
       {fetchedRecipe.map((recipe: any, recipeIndex: number) => (
         <div key={recipeIndex} className="relative w-full rounded-lg p-8 bg-[#3A4A33] shadow-lg flex flex-col items-center text-center">
@@ -127,6 +128,7 @@ const Recipes = React.memo(() => {
          
         </div>
       ))}
+    </div>
     </div>
   );
 });

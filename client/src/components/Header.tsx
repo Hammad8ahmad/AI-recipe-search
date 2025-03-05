@@ -1,6 +1,7 @@
 const Header = function () {
   return (
     <>
+    <div className="mx-2">
       <header className="w-full max-w-4xl mt-2 mx-auto p-8 sm:p-6 md:p-12 shadow-lg text-center">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-8">
           Discover Delicious Recipes
@@ -12,6 +13,7 @@ const Header = function () {
         </p>
 
       </header>
+      </div>
     </>
   );
 };
