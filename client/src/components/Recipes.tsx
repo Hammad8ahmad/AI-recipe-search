@@ -121,7 +121,7 @@ const Recipes = React.memo(() => {
 
           {/* Recipe image */}
           <img
-            className="rounded-full w-[150px] h-[150px] border border-black object-cover mb-4"
+            className="rounded-full w-[150px] text-[#FEFAE0] h-[150px] border border-black object-cover mb-4"
             src={recipe.recipe.images.SMALL.url}
             alt="Recipe image"
           />

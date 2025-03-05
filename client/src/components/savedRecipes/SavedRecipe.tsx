@@ -94,6 +94,9 @@ const SavedRecipe = ({deleteHandler} : any) => {
               src={recipe.image_url}
               alt="Recipe image"
             />
+            <div className="text-[#333333] text-sm font-bold px-2 py-2 bg-[#A0B56D] mb-2 italic mt-2">
+               These features are powered by AI and may occasionally produce inaccurate results.
+            </div>
             <AiButtons
               recipe={recipe}
               handleAnalysis={handleAnalysis}

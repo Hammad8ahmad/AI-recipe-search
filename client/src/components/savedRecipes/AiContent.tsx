@@ -203,7 +203,7 @@ const AiContent = ({ loading, NutritionAnalysis, recipeOptimization, activeFeatu
           )}
 
           {!NutritionAnalysis && !recipeOptimization && !recipeInstructions && (
-            <div className="mt-6 px-4 py-2 text-black bg-blue-400 text-center">API LIMIT REACHED :(</div>
+            <div className="mt-6 px-4 py-2 text-[#333333] bg-[#A0B56D] text-center">API limit reached.</div>
           )}
         </div>
       )}

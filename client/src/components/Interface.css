@@ -49,14 +49,6 @@ p {
   margin: 0 auto;
 }
 
-/* Show Bar for Empty Ingredients */
-.text-sm {
-  font-size: 1rem; /* 16px */
-  color: #ff6b6b; /* Red color */
-  margin-top: 1rem;
-  font-weight: 600;
-}
-
 /* Recipe Section */
 /* .grid {
   display: grid;
