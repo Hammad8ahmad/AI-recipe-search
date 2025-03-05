@@ -31,7 +31,7 @@ const SavedRecipes = () => {
 
       {/* Saved recipes component  */}
 
-      {savedRecipes.length > 0 ? (
+      {savedRecipes && savedRecipes.length > 0 ? (
       
         <SavedRecipe deleteHandler={deleteHandler}/>
        
