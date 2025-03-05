@@ -2,7 +2,6 @@
 // Contoller for getting recipes from openai api
 
 const { fetchingRecipesFromEdamam } = require("../Services/edamamApiService");
-// const { fetchRecipesFromOpenAI } = require("../Services/openAiService");
 
 const getRecipesFromEdamamApi = async (req, res, next) => {
   try {
@@ -13,18 +12,8 @@ const getRecipesFromEdamamApi = async (req, res, next) => {
       throw createError(400, "Please enter any ingredients.");
     }
 
-
-    console.log("Item before API call:", item);
-    
-
-
-
     // Fetch recipes from the service layer
-    // const recipes = await fetchRecipesFromOpenAI(ingredients);
     const recipes = await fetchingRecipesFromEdamam(item)
-
-
-
 
     res.status(201).json(recipes);
   } catch (error) {

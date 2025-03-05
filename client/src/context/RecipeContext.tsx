@@ -1,158 +1,125 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 
 // Context Setup
-const RecipeContext = createContext<any>(null);
+type RecipeContextType = {
+  savedRecipes: any[];
+  saveRecipe: (recipe: any) => Promise<void>;
+  deleteRecipe: (id: any) => Promise<void>;
+  showDeleteToast: boolean;
+  setShowDeleteToast: (value: boolean) => void;
+  fetchedRecipe: any;
+  setFetchedRecipe: (recipe: any) => void;
+  isActive: any;
+  setIsActive: (value: any) => void;
+  analysisHandler: (recipe: any) => Promise<any>;
+  optimizationHandler: (recipe: any) => Promise<any>;
+  instructionsHandler: (recipe: any) => Promise<any>;
+};
 
-export const RecipeProvider = ({ children }: { children: React.ReactNode }) => {
+const RecipeContext = createContext<RecipeContextType | null>(null);
+
+   const RecipeProvider = ({ children }: { children: ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
-  const [fetchedRecipe, setFetchedRecipe] = useState<any>(null); // Store latest fetched recipe
+  const [fetchedRecipe, setFetchedRecipe] = useState<any>(null);
   const [isActive, setIsActive] = useState<any>({});
-  const [showDeleteToast,setShowDeleteToast] = useState<any>(false)
-  
+  const [showDeleteToast, setShowDeleteToast] = useState(false);
 
-  const url = import.meta.env.VITE_PROD_URL + "/api"; // If using Vite
+  const url = import.meta.env.VITE_PROD_URL + "/api";
 
+  const fetchSavedRecipes = async () => {
+    try {
+      const response = await axios.get(`${url}/recipes`);
+      setSavedRecipes(response.data);
+    } catch (error) {
+      console.error("Error fetching saved recipes:", error);
+    }
+  };
 
-   const fetchSavedRecipes = async () => {
-      try {
-        const response = await axios.get(`${url}/recipes`);
-        console.log("this is the data which is coming when we fetch the saved recipes : ",response.data)
-        setSavedRecipes(response.data); // Set fetched recipes to state
-      } catch (error) {
-        console.error("Error fetching saved recipes:", error);
-      }
-    };
-  
-
-  // Fetch saved recipes on mount
   useEffect(() => {
     fetchSavedRecipes();
   }, []);
 
-  // Save Recipe
   const saveRecipe = async (recipe: any) => {
-    // console.log("SAVED RECIPE OBJECT IN CONTEXT ----")
-    // console.log(recipe.label)
-    // console.log(recipe.ingredients.map(ingredient => ingredient.text))
-    // console.log(recipe.calories);
-    // console.log(recipe.images.SMALL.url)
-
-
-
-
-    
-try {
-     await axios.post(`${url}/recipes`, {
-       label : recipe.label,
-        ingredients:recipe.ingredients.map((ingredient : any) => ({
-          text : ingredient.text,
+    try {
+      await axios.post(`${url}/recipes`, {
+        label: recipe.label,
+        ingredients: recipe.ingredients.map((ingredient: any) => ({
+          text: ingredient.text,
         })),
-        calories:recipe.calories,
-        image_url:recipe.images.SMALL.url
-       
+        calories: recipe.calories,
+        image_url: recipe.images.SMALL.url,
       });
-
-    // const savedRecipe = response.data    // Backend returns recipe with an id
-
-    // setSavedRecipes((prev) => [...prev, savedRecipe]);
-    await fetchSavedRecipes()            // Now it has an id!
-  } catch (error) {
-    console.error("Error saving recipe:", error);
-  }
-
-
-
+      await fetchSavedRecipes();
+    } catch (error) {
+      console.error("Error saving recipe:", error);
+    }
   };
 
-  // Delete Recipe
   const deleteRecipe = async (id: any) => {
     try {
       await axios.delete(`${url}/recipes/${id}`);
-      // setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
-
-
-      // await fetchSavedRecipes()
-    setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
-
-     
-      
+      setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
     } catch (error) {
-      console.log("Error deleting recipe:", error);
+      console.error("Error deleting recipe:", error);
     }
-   
   };
 
-  // Nutrition analysis handler 
-
-  const analysisHandler = async(recipe:any) => {
-    console.log("this is in the ai handler",recipe)
+  const analysisHandler = async (recipe: any) => {
     try {
-      const response = await axios.post(`${url}/analysis`,{
-        recipe : recipe
-      
-    })
-      console.log("THIS IS THE RESPONSE FROM ANALYSIS HANDLER ",response)
-      return response.data
+      const response = await axios.post(`${url}/analysis`, { recipe });
+      return response.data;
     } catch (error) {
-      
+      console.error("Error analyzing recipe:", error);
     }
-  }
+  };
 
-  // Recipe optimization handler
-   const optimizationHandler = async(recipe:any) => {
-    console.log("this is in the ai handler",recipe)
+  const optimizationHandler = async (recipe: any) => {
     try {
-      const response = await axios.post(`${url}/optimization`,{
-        recipe : recipe
-      
-    })
-      console.log("THIS IS THE RESPONSE FROM OPTIMIZATION HANDLER ",response)
-      return response.data
+      const response = await axios.post(`${url}/optimization`, { recipe });
+      return response.data;
     } catch (error) {
-      
+      console.error("Error optimizing recipe:", error);
     }
-  }
+  };
 
-// Recipe instructions handler
-
- const instructionsHandler = async(recipe:any) => {
-    console.log("this is in the ai handler",recipe)
+  const instructionsHandler = async (recipe: any) => {
     try {
-      const response = await axios.post(`${url}/instructions`,{
-        recipe : recipe
-      
-    })
-      console.log("THIS IS THE RESPONSE FROM INSTRUCTION HANDLER ",response)
-      return response.data
+      const response = await axios.post(`${url}/instructions`, { recipe });
+      return response.data;
     } catch (error) {
-      
+      console.error("Error fetching instructions:", error);
     }
-
-  }
-
-
-
-
+  };
 
   return (
-    <RecipeContext.Provider value={{ 
-      savedRecipes, 
-      saveRecipe, 
-      deleteRecipe,
-      showDeleteToast,
-      setShowDeleteToast, 
-      fetchedRecipe, 
-      setFetchedRecipe,
-      isActive,
-      setIsActive,
-      analysisHandler,
-      optimizationHandler,
-      instructionsHandler,
-    }}>
+    <RecipeContext.Provider
+      value={{
+        savedRecipes,
+        saveRecipe,
+        deleteRecipe,
+        showDeleteToast,
+        setShowDeleteToast,
+        fetchedRecipe,
+        setFetchedRecipe,
+        isActive,
+        setIsActive,
+        analysisHandler,
+        optimizationHandler,
+        instructionsHandler,
+      }}
+    >
       {children}
     </RecipeContext.Provider>
   );
 };
 
-export const useRecipeContext = () => useContext(RecipeContext);
+const useRecipeContext = () => {
+  const context = useContext(RecipeContext);
+  if (!context) {
+    throw new Error("useRecipeContext must be used within a RecipeProvider");
+  }
+  return context;
+};
+
+export { RecipeProvider, useRecipeContext };

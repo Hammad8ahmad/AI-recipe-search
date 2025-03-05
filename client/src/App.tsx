@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, } from 'react-router-dom';
-import AppRouter from './routes/AppRouter'; // Import AppRouter
+import AppRouter from './routes/AppRouter'; 
 import NavBar from './components/Navbar';
 import { RecipeProvider } from './context/RecipeContext';
 

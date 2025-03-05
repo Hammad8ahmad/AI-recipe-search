@@ -19,9 +19,7 @@ function Interface() {
 
   const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     setItem(e.target.value)
-    console.log("just a check : ",e.target.value)
   }
-   console.log("checking rerender in in terface component")
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -37,7 +35,6 @@ function Interface() {
     try {
       recipeRef.current?.blur();
       const response = await axios.post(`${url}/recipe-search`, { items: item });
-      console.log("Data from backend:", response.data);
       setFetchedRecipe(response.data);
       setItem("");
       setHasSearched(true); // Only show Recipes after successful search

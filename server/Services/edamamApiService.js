@@ -1,13 +1,3 @@
-
- 
-
-// const appId = process.env.EDAMAM_APP_ID;
-// const appKey = process.env.EDAMAM_APP_KEY;
-
-// if (!appId || !appKey) {
-//   console.error('Missing Edamam API credentials');
-// }
-
  const fetchingRecipesFromEdamam = async (query) => {
   try {
     const response = await fetch(

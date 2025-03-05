@@ -21,28 +21,7 @@ const Recipes = React.memo(() => {
 
   const saveRecipeHandler = async (recipe: any,recipeIndex : number) => {
     
-    // console.log("saved recipe in hadnler  : ",recipe)
-    // console.log(recipe.label)
-    // console.log(recipe.calories)
-    // console.log(recipe.ingredients)
-    // console.log(recipe.images.SMALL)
-    // console.log("recipeindex : ",recipeIndex)
-
-  //    setIsActive((prev:any) =>({
-  //   ...prev,
-  //   [recipeIndex] : !prev[recipeIndex],
-  //   setIsSaved : false
-  // }));
- 
-  //   console.log("testing state : ",isActive[recipeIndex])
-  //   if(!isActive[recipeIndex]){
-  //     try {
-  //       await saveRecipe(recipe); // Save only once ✅
-  //     } catch (error) {
-  //       console.error("Error saving recipe:", error);
-      
-  //   }
-  //   }
+   
 
   
   try {
@@ -50,7 +29,6 @@ const Recipes = React.memo(() => {
     setIsActive((prev: any) => ({ ...prev, [recipeIndex]: true }));
      setShowSavedToast(true);
     setTimeout(() => setShowSavedToast(false), 3000);
-    console.log("testing this")
 
     // Await the save operation
     await saveRecipe(recipe);
