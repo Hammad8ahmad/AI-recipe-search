@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./Interface.css";
 import axios from "axios";
 import { OrbitProgress } from "react-loading-indicators";
@@ -11,6 +11,7 @@ function Interface() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [item, setItem] = useState("");
+  const recipeRef = useRef<HTMLInputElement>(null)
 
   const { fetchedRecipe, setFetchedRecipe, } = useRecipeContext();
   // const url = import.meta.env.VITE_PROD_URL + "/api";
@@ -38,6 +39,7 @@ function Interface() {
     setLoading(true);
     setErrorMessage("");
     try {
+      recipeRef.current?.blur();
       const response = await axios.post(`${url}/recipe-search`, { items: item });
       console.log("Data from backend:", response.data);
       setFetchedRecipe(response.data);
@@ -66,13 +68,14 @@ function Interface() {
 
         {/* Search Form */}
         <form className="max-w-[500px]  mt-4 mx-auto" onSubmit={handleSubmit}>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center ">
             <input
               placeholder="Enter your favourite dish, I'm sure we have it :)"
               className="input-bar mx-2 w-full"
               name="text"
               value={item}
               onChange={handleChange}
+              ref={recipeRef}
             />
             <button type="submit" className="hidden">Search</button>
           </div>
