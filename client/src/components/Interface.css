@@ -216,18 +216,7 @@ p {
 }
 
 
-
-/* 
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  .blink {
-    animation: blink .5s infinite;
-  } */
-
-   @keyframes grow {
+ @keyframes grow {
     0%, 100% { transform: scale(0.8); opacity: 0.5; }
     50% { transform: scale(1.2); opacity: 1; }
   }
