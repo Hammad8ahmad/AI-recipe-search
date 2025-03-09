@@ -167,7 +167,7 @@ The backend exposes the following REST API endpoints:
 |  POST  | `/api/recipes` | Save a new recipe |
 |  DELETE | `/api/recipes/:id	` | Delete a saved recipe |
 | GET | `/api/search?q=food	` | Search recipes via Edamam API
-| 
+
 
  
 
