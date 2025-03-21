@@ -30,6 +30,15 @@ jobs:
             cd ~/AI-recipe-search/server
             git reset --hard origin/master
             git pull origin master
-            docker compose down
+              
+            # Stop and remove existing containers
+            docker compose down --remove-orphans || true
+            docker rm -f recipe_db recipe_server || true  
+            
+            # Clean up dangling images (optional)
+            docker system prune -f  
+            
+            # Start fresh containers
             docker compose up --build -d
+            
           EOF
