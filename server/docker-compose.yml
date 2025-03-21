@@ -7,7 +7,7 @@ services:
     container_name: recipe_db
     restart: always
     env_file:
-      - ./server/.env.prod
+      - .env.prod
     ports:
       - "5432:5432"
     volumes:
@@ -24,7 +24,7 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - ./server/.env.prod
+      - .env.prod
     depends_on:
       - postgres
     networks:
