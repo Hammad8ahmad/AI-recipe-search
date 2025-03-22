@@ -39,6 +39,7 @@ jobs:
             docker system prune -f  
             
             # Start fresh containers
-            docker compose up --build --no-cache -d
+            docker compose --build --no-cache 
+            docker compose up -d
             
           EOF
