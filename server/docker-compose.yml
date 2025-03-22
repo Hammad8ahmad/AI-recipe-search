@@ -18,7 +18,7 @@ services:
   # Express.js backend (server)
   server:
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
     container_name: recipe_server
     ports:
