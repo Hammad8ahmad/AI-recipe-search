@@ -30,6 +30,7 @@ jobs:
             cd ~/AI-recipe-search/server
             git reset --hard origin/master
             git pull origin master
+            rm -rf ~/AI-recipe-search/client
               
             # Stop and remove existing containers
             docker compose down --remove-orphans || true
