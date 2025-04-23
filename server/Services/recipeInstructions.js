@@ -35,7 +35,7 @@ important : Dont say anything else just give me the pure json
 `,
       },
     ],
-    model: "gpt-4o",
+    model: "gpt-3.5-turbo",
     temperature: 0.7,
     max_tokens: 1024,
     top_p: 1,
