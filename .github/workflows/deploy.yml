@@ -50,8 +50,55 @@
 #             docker compose build --no-cache 
 #             docker compose up -d
             
+# #           EOF
+# name: Deploy to DigitalOcean
+# on:
+#   push:
+#     branches:
+#       - master
+#     paths:
+#       - 'server/**'
+#       - 'docker-compose.yml'
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Set up SSH key
+#         run: |
+#           mkdir -p ~/.ssh
+#           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#           chmod 600 ~/.ssh/id_rsa
+#           ssh-keyscan -H "${{ secrets.DROPLET_IP }}" >> ~/.ssh/known_hosts
+    
+#       - name: Deploy to Droplet
+#         run: |
+#           ssh -tt -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_IP }} << 'EOF'
+#             set -e
+#             cd ~/AI-recipe-search/server
+#             git reset --hard origin/master
+#             git pull origin master
+#             rm -rf ~/AI-recipe-search/client
+
+#             # Stop and remove existing containers
+#             docker compose down --remove-orphans || true
+#             docker rm -f recipe_db recipe_server || true
+
+#             # Clean up dangling images (optional)
+#             docker system prune -f
+
+#             # Start fresh containers
+#             docker compose build --no-cache
+#             docker compose up -d
 #           EOF
+
+          
 name: Deploy to DigitalOcean
+
 on:
   push:
     branches:
@@ -74,7 +121,11 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "${{ secrets.DROPLET_IP }}" >> ~/.ssh/known_hosts
-    
+
+      - name: Debug SSH Key
+        run: |
+          ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_IP }} echo "Connected"
+
       - name: Deploy to Droplet
         run: |
           ssh -tt -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_IP }} << 'EOF'
@@ -96,4 +147,5 @@ jobs:
             docker compose up -d
           EOF
 
-          
+
+        # this is just a testz
