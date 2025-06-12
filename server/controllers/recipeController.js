@@ -8,6 +8,10 @@ const postRecipe = async (req,res,next) => {
 
  const {label,ingredients,calories,image_url} = req.body;
 
+
+
+
+ 
   try {
     const result = await pool.query(
       "INSERT INTO recipes (label, ingredients, calories, image_url) VALUES ($1, $2, $3, $4) RETURNING *",
