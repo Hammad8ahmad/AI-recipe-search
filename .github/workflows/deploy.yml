@@ -21,8 +21,8 @@ jobs:
           mkdir -p ~/.ssh
 
           # Write the private key from GitHub Secrets to a file
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github-actions-deploy
+          chmod 600 ~/.ssh/github-actions-deploy
 
           # Add droplet IP to known_hosts to avoid prompt
           ssh-keyscan -H ${{ secrets.DROPLET_IP }} >> ~/.ssh/known_hosts
@@ -37,12 +37,12 @@ jobs:
       - name: 🧪 Test SSH connection
         run: |
           echo "Testing SSH connection to droplet..."
-          ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} "echo ✅ SSH connection successful"
+          ssh -vvv -i ~/.ssh/github-actions-deploy -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} "echo ✅ SSH connection successful"
 
       - name: 🚀 Deploy to Droplet
         run: |
           echo "Running remote deployment commands..."
-          ssh -tt -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << 'EOF'
+          ssh -tt -i ~/.ssh/github-actions-deploy -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << 'EOF'
             set -e
             echo "✅ Logged into droplet"
 
