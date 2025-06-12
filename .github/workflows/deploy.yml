@@ -34,11 +34,6 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: 🧪 Test SSH connection
-        run: |
-          echo "Testing SSH connection to droplet..."
-          ssh -vvv -i ~/.ssh/github-actions-deploy -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} "echo ✅ SSH connection successful"
-
       - name: 🚀 Deploy to Droplet
         run: |
           echo "Running remote deployment commands..."

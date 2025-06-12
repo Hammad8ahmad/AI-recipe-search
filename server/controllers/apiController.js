@@ -26,3 +26,5 @@ const getRecipesFromEdamamApi = async (req, res, next) => {
 
 module.exports = {getRecipesFromEdamamApi}
 
+
+
