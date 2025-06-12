@@ -16,3 +16,5 @@ const getAnalysisfromAi = async(req,res,next) => {
 }
 
 module.exports = getAnalysisfromAi
+
+

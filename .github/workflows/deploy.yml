@@ -52,7 +52,6 @@
             
 #           EOF
 name: Deploy to DigitalOcean
-
 on:
   push:
     branches:
