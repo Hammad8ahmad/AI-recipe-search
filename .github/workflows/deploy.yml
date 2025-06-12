@@ -1,3 +1,57 @@
+# name: Deploy to DigitalOcean
+
+# on:
+#   push:
+#     branches:
+#       - master
+#     paths:
+#       - 'server/**'
+#       - 'docker-compose.yml'  
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Set up SSH key
+#         run: |
+#           mkdir -p ~/.ssh
+#           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_ci
+#           chmod 600 ~/.ssh/id_rsa_ci
+#           ssh-keyscan -H ${{ secrets.DROPLET_IP }} >> ~/.ssh/known_hosts
+#       - name: Debug SSH Key
+#         run: |
+#           echo "Start of key:"
+#           head -n 1 ~/.ssh/id_rsa_ci
+#           echo "End of key:"
+#           tail -n 1 ~/.ssh/id_rsa_ci
+          
+#       - name: Deploy to Droplet
+#         run: |
+#           ssh -i ~/.ssh/id_rsa_ci root@${{ secrets.DROPLET_IP }} << 'EOF'
+#             set -e
+#             cd ~/AI-recipe-search/server
+#             git reset --hard origin/master
+#             git pull origin master
+#             rm -rf ~/AI-recipe-search/client
+              
+#             # Stop and remove existing containers
+#             docker compose down --remove-orphans || true
+#             docker rm -f recipe_db recipe_server || true  
+            
+#             # Clean up dangling images (optional)
+#             docker system prune -f  
+            
+#             # Start fresh containers
+#             docker compose build --no-cache 
+#             docker compose up -d
+            
+#           EOF
+
+
 name: Deploy to DigitalOcean
 
 on:
@@ -6,7 +60,7 @@ on:
       - master
     paths:
       - 'server/**'
-      - 'docker-compose.yml'  
+      - 'docker-compose.yml'
 
 jobs:
   deploy:
@@ -22,31 +76,24 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_ci
           chmod 600 ~/.ssh/id_rsa_ci
           ssh-keyscan -H ${{ secrets.DROPLET_IP }} >> ~/.ssh/known_hosts
-      - name: Debug SSH Key
-        run: |
-          echo "Start of key:"
-          head -n 1 ~/.ssh/id_rsa_ci
-          echo "End of key:"
-          tail -n 1 ~/.ssh/id_rsa_ci
-          
+
       - name: Deploy to Droplet
         run: |
-          ssh -i ~/.ssh/id_rsa_ci root@${{ secrets.DROPLET_IP }} << 'EOF'
+          ssh -tt -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_ci root@${{ secrets.DROPLET_IP }} << 'EOF'
             set -e
             cd ~/AI-recipe-search/server
             git reset --hard origin/master
             git pull origin master
             rm -rf ~/AI-recipe-search/client
-              
+
             # Stop and remove existing containers
             docker compose down --remove-orphans || true
-            docker rm -f recipe_db recipe_server || true  
-            
+            docker rm -f recipe_db recipe_server || true
+
             # Clean up dangling images (optional)
-            docker system prune -f  
-            
+            docker system prune -f
+
             # Start fresh containers
-            docker compose build --no-cache 
+            docker compose build --no-cache
             docker compose up -d
-            
           EOF
