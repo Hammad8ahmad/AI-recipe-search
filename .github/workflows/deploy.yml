@@ -51,8 +51,6 @@
 #             docker compose up -d
             
 #           EOF
-
-
 name: Deploy to DigitalOcean
 
 on:
