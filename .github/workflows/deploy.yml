@@ -75,11 +75,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "${{ secrets.DROPLET_IP }}" >> ~/.ssh/known_hosts
-      - name: Deploy to Droplet (debug)
-        run: |
-          ssh -vvv -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_IP }} echo "SSH OK"
-          
-
+    
       - name: Deploy to Droplet
         run: |
           ssh -tt -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_IP }} << 'EOF'
