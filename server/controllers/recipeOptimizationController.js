@@ -16,7 +16,6 @@ const getRecipeOptimizationfromAi = async(req,res,next) => {
         next(error)
     }
 
-
 }
 
 module.exports = getRecipeOptimizationfromAi
