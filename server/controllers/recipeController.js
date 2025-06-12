@@ -11,7 +11,7 @@ const postRecipe = async (req,res,next) => {
 
 
 
- 
+
   try {
     const result = await pool.query(
       "INSERT INTO recipes (label, ingredients, calories, image_url) VALUES ($1, $2, $3, $4) RETURNING *",
@@ -28,6 +28,7 @@ const postRecipe = async (req,res,next) => {
 // this is just a test
 
 // Getting all recipes from the db
+
 
 const getRecipes = async (req, res,next) => {
   try {
