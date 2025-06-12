@@ -45,6 +45,8 @@ important : Dont say anything else just give me the pure json
     top_p: 1,
   });
 
+  
+
   const rawResponse = response.choices[0]?.message?.content || "";
   console.log("RAW RESPONSE : ",rawResponse)
   const cleanedResponse = rawResponse
