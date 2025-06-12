@@ -2,7 +2,6 @@ const { fetchRecipeOptimizationFromOpenAI } =  require("../Services/recipeOptimi
 
 
 const getRecipeOptimizationfromAi = async(req,res,next) => {
-
     try {
     const start = performance.now();
     const recipe = req.body;
