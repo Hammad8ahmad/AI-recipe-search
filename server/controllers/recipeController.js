@@ -21,6 +21,7 @@ const postRecipe = async (req,res,next) => {
   }
 
 }
+// this is just a test to check 
 
 // Getting all recipes from the db
 
