@@ -1,7 +1,10 @@
 // initDb.js
 const pool = require('./db');
 
+console.log("initDb.js loaded");
 const initializeDB = async() => {
+    console.log("Running initializeDB...");
+
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS recipes (
       id SERIAL PRIMARY KEY,
@@ -13,7 +16,7 @@ const initializeDB = async() => {
     );
   `;
 
-  
+
 
   try {
     await pool.query(createTableQuery);
@@ -23,6 +26,6 @@ const initializeDB = async() => {
 
 }
 
-module.exports = initializeDB
+module.exports = {initializeDB}
 
 
