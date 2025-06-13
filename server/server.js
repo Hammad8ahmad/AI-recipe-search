@@ -8,10 +8,12 @@ const edamamApiRoute = require("./Routes/edamamApiRoute");
 const getAnalysisFromAi = require("./Routes/nutritionalAnalysisRoute");
 const getRecipeOptimizationfromAi = require("./controllers/recipeOptimizationController");
 const getInstructionsFromAi = require("./controllers/recipeInstructionsController");
-const initializeDB = require("./Model/initDb");
+const {initializeDB} = require("./Model/initDb");
 
 // Load environment variables
 dotenv.config();
+
+
 
 // Define allowed origins for CORS
 const allowedOrigins = [
@@ -49,7 +51,5 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, async() => {
   console.log(`Server started listening at port ${PORT}.`);
-  await initializeDB;
-
-  
+  await initializeDB();
 });
