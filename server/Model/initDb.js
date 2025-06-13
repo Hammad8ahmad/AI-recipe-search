@@ -26,6 +26,6 @@ const initializeDB = async() => {
 
 }
 
-module.exports = {initializeDB}
+module.exports = initializeDB
 
 
