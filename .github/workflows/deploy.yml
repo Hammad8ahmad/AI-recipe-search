@@ -33,7 +33,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: 🚀 Deploy to Droplet
+      - name: 🚀 Deploy to Droplet (code sync + cleanup)
         run: |
           echo "Running remote deployment commands..."
           ssh -i ~/.ssh/github-actions-deploy -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << 'EOF'
@@ -47,7 +47,7 @@ jobs:
             git reset --hard origin/master
             git pull origin master
 
-            # Clean up client (if needed)
+            # Clean up client (optional)
             rm -rf ~/AI-recipe-search/client
 
             # Stop and clean existing containers
@@ -56,10 +56,19 @@ jobs:
 
             # Optional cleanup
             docker system prune -f
+            EOF
 
-            # Rebuild and restart
+      - name: 📦 Upload .env.prod to server
+        run: |
+          echo "${{ secrets.ENV_PROD }}" | ssh -i ~/.ssh/github-actions-deploy \
+          -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} \
+          'cat > ~/AI-recipe-search/server/.env.prod'
+
+      - name: 🔧 Rebuild and restart containers
+        run: |
+          ssh -i ~/.ssh/github-actions-deploy -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << 'EOF'
+            cd ~/AI-recipe-search/server
             docker compose build --no-cache
             docker compose up -d
-
             echo "✅ Deployment complete"
-          EOF
+            EOF

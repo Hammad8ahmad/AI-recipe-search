@@ -13,6 +13,8 @@ const initializeDB = async() => {
     );
   `;
 
+  
+
   try {
     await pool.query(createTableQuery);
   } catch (error) {
@@ -21,4 +23,6 @@ const initializeDB = async() => {
 
 }
 
-module.exports = initializeDB()
+module.exports = initializeDB
+
+
