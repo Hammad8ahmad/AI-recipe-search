@@ -49,9 +49,19 @@ app.use(errorHandler);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, async() => {
-  console.log(`Server started listening at port ${PORT}.`);
-  await initializeDB;
 
+async function startServer() {
+  try {
+    await initializeDB(); // 👈 Ensure DB table is created first
+    console.log("Database initialized");
 
-});
+    app.listen(PORT, () => {
+      console.log(`Server started listening at port ${PORT}.`);
+    });
+  } catch (error) {
+    console.error("Failed to initialize DB:", error);
+    process.exit(1); // Exit if DB setup fails
+  }
+}
+
+startServer();
