@@ -25,7 +25,7 @@ function Interface() {
 
     if (!item.trim()) {
       recipeRef.current?.blur()
-      setErrorMessage("Please enter ingredients.");
+      setErrorMessage("Please enter any food item.");
       setTimeout(() => setErrorMessage(""), 2000);
       return;
     }
