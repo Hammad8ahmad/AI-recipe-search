@@ -56,7 +56,7 @@ jobs:
 
             # Optional cleanup
             docker system prune -f
-            EOF
+          EOF
 
       - name: 📦 Upload .env.prod to server
         run: |
@@ -71,4 +71,4 @@ jobs:
             docker compose build --no-cache
             docker compose up -d
             echo "✅ Deployment complete"
-            EOF
+          EOF
