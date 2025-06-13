@@ -5,3 +5,4 @@ const getRecipeOptimizationfromAi = require("../controllers/recipeOptimizationCo
 router.post("/",getRecipeOptimizationfromAi)
 
 module.exports = router
+
