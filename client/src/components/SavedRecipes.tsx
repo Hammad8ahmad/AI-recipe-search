@@ -8,9 +8,9 @@ const SavedRecipes = () => {
 
 
  const deleteHandler = async (id:any) => {
-    setShowDeleteToast(true);
       setTimeout(() => setShowDeleteToast(false), 3000); 
     await deleteRecipe(id);
+    setShowDeleteToast(true);
     
     
   }
