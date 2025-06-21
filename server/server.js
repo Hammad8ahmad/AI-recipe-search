@@ -8,7 +8,7 @@ const edamamApiRoute = require("./Routes/edamamApiRoute");
 const getAnalysisFromAi = require("./Routes/nutritionalAnalysisRoute");
 const getRecipeOptimizationfromAi = require("./controllers/recipeOptimizationController");
 const getInstructionsFromAi = require("./controllers/recipeInstructionsController");
-const  initializeDB = require("./Model/initDb");
+const  { initializeDB } = require("./Model/initDb");
 
 // Load environment variables
 dotenv.config();

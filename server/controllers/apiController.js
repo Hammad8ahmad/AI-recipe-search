@@ -15,6 +15,7 @@ const getRecipesFromEdamamApi = async (req, res, next) => {
 
     // Fetch recipes from the service layer
     const recipes = await fetchingRecipesFromEdamam(item)
+    console.log()
 
     res.status(201).json(recipes);
   } catch (error) {
