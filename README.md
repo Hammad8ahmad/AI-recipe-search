@@ -156,17 +156,7 @@ The CI/CD pipeline uses GitHub Actions:
   Triggered when you push to the master branch.Runs the deployment workflow, pulling the latest code and restarting Docker containers on DigitalOcean.
 - **Frontend Deployment:**
   Handled by Vercel, automatically deploying changes from the master branch.
-## 📚 API Routes
-The backend exposes the following REST API endpoints:
 
-
-
-| Method | Route  | Description                |
-| :-------- | :------- | :------------------------- |
-|  GET | `/api/recipes` | Get all saved recipes |
-|  POST  | `/api/recipes` | Save a new recipe |
-|  DELETE | `/api/recipes/:id	` | Delete a saved recipe |
-| GET | `/api/search?q=food	` | Search recipes via Edamam API
 
 
  
