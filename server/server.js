@@ -20,7 +20,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
   'https://ai-recipe-search.vercel.app',
-  'https://ai-recipe-search.duckdns.org'
+  'https://ai-recipe-search.duckdns.org',
+  'https://ai-recipe-search.duckdns.org/api/recipe-search'
 ];
 
 // Configure CORS options
