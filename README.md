@@ -1,16 +1,16 @@
 
-## 🍽️ AI Recipe Search https://ai-recipe-search.vercel.app/
+##  AI Recipe Search https://ai-recipe-search.vercel.app/
 An AI-powered recipe search application that allows users to discover delicious recipes based on their input. Built with a React frontend,Postgres db and an Express.js backend, and powered by the Edamam API for recipe data. 
 
-## 🚀 Features
-- 🌿 Recipe Search: Search for recipes using the Edamam API.
-- 📄 Save & Delete Recipes: Add favorite recipes to a list and remove them as needed.
-- 🔥 Responsive Design: Fully responsive layout using Tailwind CSS.
-- 🔗 Real-time Deployment:
+##  Features
+-  Recipe Search: Search for recipes using the Edamam API.
+-  Save & Delete Recipes: Add favorite recipes to a list and remove them as needed.
+-  Responsive Design: Fully responsive layout using Tailwind CSS.
+-  Real-time Deployment:
   - Backend is deployed on DigitalOcean using Docker.
   - Frontend is deployed on Vercel with automatic deployments from GitHub.
-- 📡 API Integration: Edamam API for recipe data and PostgreSQL for storage.
-## 🏗️ Tech Stack
+-  API Integration: Edamam API for recipe data and PostgreSQL for storage.
+##  Tech Stack
 - Frontend: React, TypeScript, Tailwind CSS
 - Backend: Express.js, Node.js
 - Database: PostgreSQL (Dockerized)
@@ -18,7 +18,7 @@ An AI-powered recipe search application that allows users to discover delicious 
 - API: Edamam API (for recipes)
 - Docker: Docker & Docker Compose for container orchestration
 - CI/CD: GitHub Actions
-## 📦 Project Structure
+##  Project Structure
 ```bash
 ├── client/                  # React frontend (Vercel deployment)
 │   ├── public/
@@ -39,10 +39,10 @@ An AI-powered recipe search application that allows users to discover delicious 
 ├── README.md
 └── ...
 ```
-## 🌿 Environment Variables
+##  Environment Variables
 You need to set up the following environment variables for both the server and client:
 
-### 📦 Server (server/.env)
+###  Server (server/.env)
 Create a .env file in the server directory:
 ```bash
 # Production Environment
@@ -77,7 +77,7 @@ DB_USER=your_db_user
 DB_PASSWORD=your_db_password
 DB_NAME=your_db_name
 ```
-🎨 Client (client/.env)
+ Client (client/.env)
 Create a .env file in the client directory:
 ```bash
 # API URLs
@@ -92,21 +92,21 @@ VITE_PROD_URL=https://your-deployed-backend-url
 - VITE_PROD_URL: Used in production to connect to the deployed backend.
 ⚠️ **Important**: Ensure your .env files are listed in .gitignore to prevent them from being pushed to GitHub.
 
-## 🏃‍♂️ Running the Project
-### 1️⃣ Clone the Repository
+##  Running the Project
+### 1 Clone the Repository
 ```bash
 git clone https://github.com/yourusername/ai-recipe-search.git
 cd ai-recipe-search
 ```
-### 2️⃣ Set up Environment Variables
+### 2 Set up Environment Variables
 Create .env files for both server and client following the formats mentioned above.
 
-### 3️⃣ Run Docker Compose (for Backend + PostgreSQL)
+### 3 Run Docker Compose (for Backend + PostgreSQL)
 Ensure Docker is running, then start the services:
 ```bash
 docker compose up --build
 ```
-### 4️⃣ Run the Client (Frontend)
+### 4 Run the Client (Frontend)
 Navigate to the client folder:
 
 ```bash
@@ -120,11 +120,11 @@ For production (build the client):
 ```bash
 npm run build
 ```
-### 5️⃣ Access the Application
+### 5 Access the Application
 - Frontend: http://localhost:5173 (default Vite port)
 - Backend API: http://localhost:3000
-## 🚀 Deployment
-### 📡 Backend (DigitalOcean)
+##  Deployment
+###  Backend (DigitalOcean)
 The backend is automatically deployed using GitHub Actions.
 Workflow:
 - Push changes to the master branch.
@@ -136,7 +136,7 @@ Workflow:
 ```bash
 https://your-digitalocean-droplet-ip:3000
 ```
-### 🎨 Frontend (Vercel)
+###  Frontend (Vercel)
 The client is deployed on Vercel.
 Workflow:
 
@@ -149,7 +149,7 @@ Workflow:
 https://your-project-name.vercel.app
 ```
 - Make sure your client uses the correct VITE_PROD_URL for API requests.
-## ✅ CI/CD Workflow
+##  CI/CD Workflow
 The CI/CD pipeline uses GitHub Actions:
 
 - **Backend Deployment:**
