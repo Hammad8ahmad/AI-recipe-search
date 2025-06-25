@@ -1,6 +1,19 @@
 
-##  AI Recipe Search https://ai-recipe-search.vercel.app/
+##  AI Recipe Search 
 An AI-powered recipe search application that allows users to discover delicious recipes based on their input. Built with a React frontend,Postgres db and an Express.js backend, and powered by the Edamam API for recipe data. 
+
+##  Live Demo
+
+![Demo](https://ai-recipe-search.vercel.app/)
+
+##  Screenshots
+
+Home page:
+![home](https://github.com/user-attachments/assets/f06ef2ee-a71d-438f-bfac-cd2e3b069926)
+
+Saved recipes page(with ai features)
+![saved](https://github.com/user-attachments/assets/a0527557-145b-4cf6-8d7c-4f03efb2b2bb)
+
 
 ##  Features
 -  Recipe Search: Search for recipes using the Edamam API.
