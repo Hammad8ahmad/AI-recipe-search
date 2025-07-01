@@ -4,7 +4,7 @@ An AI-powered recipe search application that allows users to discover delicious 
 
 ##  Live Demo 
 
-![Demo](https://ai-recipe-search.vercel.app/)
+[Live Site](https://ai-recipe-search.vercel.app/)
 
 ##  Screenshots
 
