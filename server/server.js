@@ -9,6 +9,7 @@ const getAnalysisFromAi = require("./Routes/nutritionalAnalysisRoute");
 const getRecipeOptimizationfromAi = require("./controllers/recipeOptimizationController");
 const getInstructionsFromAi = require("./controllers/recipeInstructionsController");
 const   initializeDB  = require("./Model/initDb");
+const userRoutes = require("./Routes/user")
 
 // Load environment variables
 dotenv.config();
@@ -45,6 +46,7 @@ app.use("/api/analysis", getAnalysisFromAi);
 app.use("/api/optimization", getRecipeOptimizationfromAi);
 app.use("/api/instructions", getInstructionsFromAi);
 app.use("/api/recipes", recipeRoutes);
+app.use("/api/user",userRoutes)
 
 // Attach error handling middleware
 app.use(errorHandler);
