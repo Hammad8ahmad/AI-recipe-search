@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 const errorHandler = require("./errorMiddleware");
 const recipeRoutes = require("./Routes/recipeRoutes");
 const edamamApiRoute = require("./Routes/edamamApiRoute");
@@ -12,7 +12,7 @@ const   initializeDB  = require("./Model/initDb");
 const userRoutes = require("./Routes/user")
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 
 

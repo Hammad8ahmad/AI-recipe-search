@@ -1,9 +1,10 @@
 node_modules
 .gitignore
-.env
+.env.development
 .env.prod
 .git
 Dockerfile
 Dockerfile.dev
 server
 docker-compose.yml
+docker-compose.dev.yml
