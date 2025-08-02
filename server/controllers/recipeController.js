@@ -1,7 +1,5 @@
 const pool = require("../Model/db");
 
-
-
 // Post a recipe to the db
 
 const postRecipe = async (req,res,next) => {
