@@ -8,6 +8,8 @@ export const  useSignup = () => {
     password:string
 }
 
+
+
     const [error,setError] = useState<any>(null)
     const [isLoading,setIsLoading] = useState<any>(false)
     const {dispatch} = useAuthContext()
