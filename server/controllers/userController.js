@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken")
 const { findUserByEmail, createUser} = require("../Services/userService.js")
 
 
+
+
+
 const createToken = (id) => {
 
     return jwt.sign({id},process.env.SECRET,{expiresIn:"2d"})
