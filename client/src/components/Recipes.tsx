@@ -1,4 +1,4 @@
-import { useRecipeContext } from "../context/RecipeContext";
+import { useRecipeContext } from "./hooks/useRecipeContext";
 import React, { useState,useEffect} from "react";
 
 const Recipes = React.memo(() => {
@@ -12,18 +12,10 @@ const Recipes = React.memo(() => {
   useEffect ( ()=> {
     setIsSaved(false)
     setIsActive(false)
-
-
-
   },[fetchedRecipe])
-
-  
 
   const saveRecipeHandler = async (recipe: any,recipeIndex : number) => {
     
-   
-
-  
   try {
     // Mark the recipe as active (saved)
     setIsActive((prev: any) => ({ ...prev, [recipeIndex]: true }));

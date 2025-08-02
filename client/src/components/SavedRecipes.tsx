@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRecipeContext } from '../context/RecipeContext';
+import { useRecipeContext } from './hooks/useRecipeContext';
 import SavedRecipe from "./savedRecipes/SavedRecipe"
 
 const SavedRecipes = () => {

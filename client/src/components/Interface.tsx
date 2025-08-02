@@ -4,7 +4,8 @@ import axios from "axios";
 import { OrbitProgress } from "react-loading-indicators";
 import Recipes from "./Recipes";
 import Header from "./Header";
-import { useRecipeContext } from "../context/RecipeContext";
+import { useRecipeContext } from "./hooks/useRecipeContext";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 function Interface() {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,7 @@ function Interface() {
   const [hasSearched, setHasSearched] = useState(false);
   const [item, setItem] = useState("");
   const recipeRef = useRef<HTMLInputElement>(null)
+  const {user} = useAuthContext()
 
   const { fetchedRecipe, setFetchedRecipe, } = useRecipeContext();
   const url = import.meta.env.VITE_PROD_URL + "/api"
@@ -28,6 +30,10 @@ function Interface() {
       setErrorMessage("Please enter any food item.");
       setTimeout(() => setErrorMessage(""), 2000);
       return;
+
+    }
+    if(!user){
+      return 
     }
 
     setLoading(true);

@@ -10,8 +10,35 @@ const createToken = (id) => {
 }
 
 const loginUser = async (req,res) => {
+    try {
 
-    res.json({msg:"login user"})
+        const {email,password} = req.body
+
+        if(!email || !password){
+        throw Error("All fields must be filled")
+        
+        }
+
+        const user = await findUserByEmail(email)
+        if(!user){
+            throw Error("Incorrect Email")
+        }
+
+        const match = await bcrypt.compare(password,user.password)
+
+        if(!match){
+            throw Error("Incorrect password")
+        }
+        
+
+    // Creating a token
+    
+    token = createToken(user.id)
+    res.status(200).json({email: user.email,token })
+    } catch (error) {
+      res.status(400).json({error:error.message})
+    }
+
 
 }
 

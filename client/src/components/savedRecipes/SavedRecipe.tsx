@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRecipeContext } from "../../context/RecipeContext";
+import { useRecipeContext } from "../hooks/useRecipeContext";
 import AiButtons from "./AiButtons";
 import AiContent from "./AiContent";
 

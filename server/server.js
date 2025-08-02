@@ -9,7 +9,8 @@ const getAnalysisFromAi = require("./Routes/nutritionalAnalysisRoute");
 const getRecipeOptimizationfromAi = require("./controllers/recipeOptimizationController");
 const getInstructionsFromAi = require("./controllers/recipeInstructionsController");
 const   initializeDB  = require("./Model/initDb");
-const userRoutes = require("./Routes/user")
+const userRoutes = require("./Routes/user");
+const { requireAuth } = require("./Middleware/requireAuth");
 
 // Load environment variables
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
@@ -39,6 +40,7 @@ app.use(cors(corsOptions));
 
 // Parse JSON bodies
 app.use(express.json());
+
 
 // Define routes
 app.use("/api/recipe-search", edamamApiRoute);

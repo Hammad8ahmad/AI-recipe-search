@@ -2,9 +2,17 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLogout } from "./hooks/useLogout";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {logout} = useLogout()
+  const {user} = useAuthContext()
+
+  const handleClick = () => {
+    logout()
+  }
 
   return (
     <nav className="sticky top-0 z-40 bg-[#a0b56d] text-black p-3 shadow-md">
@@ -35,12 +43,30 @@ const NavBar = () => {
 
         {/* Desktop Nav Links */}
         <div className="hidden md:flex space-x-6">
-          <Link to="/" className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
+          {user && (
+          <div>
+          <Link to="/" className="text-xl mr-4 font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
             Home
           </Link>
-          <Link to="/saved" className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
+          <Link to="/saved" className="text-xl mr-4 font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
             Saved
           </Link>
+            <button
+            className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300" 
+            onClick={handleClick}>Logout</button>
+          </div>                 
+          )}
+          {!user && (
+          <div>
+          <Link to="/signup" className="text-xl mr-4 font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
+            Signup 
+          </Link>
+          <Link to="/login" className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
+            Login 
+          </Link>                 
+          </div>
+          )}
+               
         </div>
       </div>
 
@@ -54,13 +80,15 @@ const NavBar = () => {
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
+            {user && (
+            <div>
             <Link
               to="/"
               className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
               onClick={() => setIsOpen(false)}
             >
               Home
-            </Link>
+            </Link>        
             <Link
               to="/saved"
               className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
@@ -68,6 +96,33 @@ const NavBar = () => {
             >
               Saved
             </Link>
+            <div className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300">
+            <button
+              className=" text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
+              onClick={handleClick}>Logout</button>
+            </div>              
+            </div>
+            )}
+            {!user && (
+            <div>
+            <Link
+              to="/signup"
+              className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
+              onClick={() => setIsOpen(false)}
+            >
+              Signup
+            </Link>
+            <Link
+              to="/login"
+              className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
+              onClick={() => setIsOpen(false)}
+            >
+              Login
+            </Link>
+            </div>
+          )}
+             
+                              
           </motion.div>
         )}
       </AnimatePresence>

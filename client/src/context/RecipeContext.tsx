@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useState, useEffect, ReactNode, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
-// Context Setup
 type RecipeContextType = {
   savedRecipes: any[];
   saveRecipe: (recipe: any) => Promise<void>;
@@ -17,9 +17,9 @@ type RecipeContextType = {
   instructionsHandler: (recipe: any) => Promise<any>;
 };
 
-const RecipeContext = createContext<RecipeContextType | null>(null);
+export const RecipeContext = createContext<RecipeContextType | null>(null);
 
-   const RecipeProvider = ({ children }: { children: ReactNode }) => {
+const RecipeProvider = ({ children }: { children: ReactNode }) => {
   const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
   const [fetchedRecipe, setFetchedRecipe] = useState<any>(null);
   const [isActive, setIsActive] = useState<any>({});
@@ -27,9 +27,21 @@ const RecipeContext = createContext<RecipeContextType | null>(null);
 
   const url = import.meta.env.VITE_PROD_URL + "/api";
 
+  const authContext = useContext(AuthContext);
+  const user = authContext?.user;
+
+  const authHeaders = user?.token
+    ? {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    : {};
+
   const fetchSavedRecipes = async () => {
+    if (!user?.token) return;
     try {
-      const response = await axios.get(`${url}/recipes`);
+      const response = await axios.get(`${url}/recipes`, authHeaders);
       setSavedRecipes(response.data);
     } catch (error) {
       console.error("Error fetching saved recipes:", error);
@@ -38,18 +50,27 @@ const RecipeContext = createContext<RecipeContextType | null>(null);
 
   useEffect(() => {
     fetchSavedRecipes();
-  }, []);
+     if (!user) {
+      setFetchedRecipe(null);
+      setIsActive({});
+    }
+  }, [user]);
 
   const saveRecipe = async (recipe: any) => {
+    if (!user?.token) return;
     try {
-      await axios.post(`${url}/recipes`, {
-        label: recipe.label,
-        ingredients: recipe.ingredients.map((ingredient: any) => ({
-          text: ingredient.text,
-        })),
-        calories: recipe.calories,
-        image_url: recipe.images.SMALL.url,
-      });
+      await axios.post(
+        `${url}/recipes`,
+        {
+          label: recipe.label,
+          ingredients: recipe.ingredients.map((ingredient: any) => ({
+            text: ingredient.text,
+          })),
+          calories: recipe.calories,
+          image_url: recipe.images.SMALL.url,
+        },
+        authHeaders
+      );
       await fetchSavedRecipes();
     } catch (error) {
       console.error("Error saving recipe:", error);
@@ -57,8 +78,9 @@ const RecipeContext = createContext<RecipeContextType | null>(null);
   };
 
   const deleteRecipe = async (id: any) => {
+    if (!user?.token) return;
     try {
-      await axios.delete(`${url}/recipes/${id}`);
+      await axios.delete(`${url}/recipes/${id}`, authHeaders);
       setSavedRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
     } catch (error) {
       console.error("Error deleting recipe:", error);
@@ -114,12 +136,4 @@ const RecipeContext = createContext<RecipeContextType | null>(null);
   );
 };
 
-const useRecipeContext = () => {
-  const context = useContext(RecipeContext);
-  if (!context) {
-    throw new Error("useRecipeContext must be used within a RecipeProvider");
-  }
-  return context;
-};
-
-export { RecipeProvider, useRecipeContext };
+export { RecipeProvider };
