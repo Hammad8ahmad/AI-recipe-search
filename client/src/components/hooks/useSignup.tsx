@@ -18,8 +18,9 @@ export const  useSignup = () => {
 
         setIsLoading(true)
         setError(null)
+        const url = import.meta.env.VITE_PROD_URL + "/api";
 
-        const response = await fetch("http://localhost:3000/api/user/signup",{
+        const response = await fetch(`${url}/user/signup`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({email,password})
