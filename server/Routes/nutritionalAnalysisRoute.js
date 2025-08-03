@@ -7,3 +7,4 @@ router.use(requireAuth)
 router.post("/",getAnalysisFromAi)
 
 module.exports = router
+
