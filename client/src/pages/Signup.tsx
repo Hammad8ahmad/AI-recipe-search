@@ -9,18 +9,19 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await signup({ email, password })
     if (error) {
       setShowError(true)
       const timer = setTimeout(() => setShowError(false), 2000)
       return () => clearTimeout(timer)
     }
+    await signup({ email, password })
+ 
   }
 
   return (
     <>
       <form
-        className="signup-form max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl shadow-md flex flex-col gap-4 border border-gray-200"
+        className="signup-form  max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl shadow-md flex flex-col gap-4 border border-gray-200"
         onSubmit={handleSubmit}
       >
         <div className="flex justify-center">

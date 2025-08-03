@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState,  } from "react"
 import { useLogin } from "../components/hooks/useLogin"
 
 const Login = () => {
@@ -9,16 +9,14 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await login({ email, password })
-  }
-
-  useEffect(() => {
-    if (error) {
+       if (error) {
       setShowError(true)
       const timer = setTimeout(() => setShowError(false), 2000)
       return () => clearTimeout(timer)
     }
-  }, [error])
+    await login({ email, password })
+  }
+
 
   return (
     <>
