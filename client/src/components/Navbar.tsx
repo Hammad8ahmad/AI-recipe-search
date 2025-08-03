@@ -42,32 +42,52 @@ const NavBar = () => {
         </motion.button>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex space-x-6">
-          {user && (
-          <div>
-          <Link to="/" className="text-xl mr-4 font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
-            Home
-          </Link>
-          <Link to="/saved" className="text-xl mr-4 font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
-            Saved
-          </Link>
-            <button
-            className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300" 
-            onClick={handleClick}>Logout</button>
-          </div>                 
-          )}
-          {!user && (
-          <div>
-          <Link to="/signup" className="text-xl mr-4 font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
-            Signup 
-          </Link>
-          <Link to="/login" className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] hover:border-b-4 hover:border-solid transition-colors duration-300">
-            Login 
-          </Link>                 
-          </div>
-          )}
-               
-        </div>
+{/* Desktop Nav Links */}
+<div className="hidden md:flex space-x-6 items-center">
+  {user && (
+    <>
+      <Link
+        to="/"
+        className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] transition-colors duration-300"
+      >
+        Home
+      </Link>
+      <Link
+        to="/saved"
+        className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] transition-colors duration-300"
+      >
+        Saved
+      </Link>
+      <button
+        className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] transition-colors duration-300"
+        onClick={handleClick}
+      >
+        Logout
+      </button>
+      <span className="text-sm font-mono text-[#333] bg-[#fefae0] border border-[#333] px-3 py-1 rounded-full shadow-sm">
+      {user.email}
+      </span>
+    
+    </>
+  )}
+  {!user && (
+    <>
+      <Link
+        to="/signup"
+        className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] transition-colors duration-300"
+      >
+        Signup
+      </Link>
+      <Link
+        to="/login"
+        className="text-xl font-mono border-b-4 border-transparent hover:text-[#fefae0] hover:border-b-[#fefae0] transition-colors duration-300"
+      >
+        Login
+      </Link>
+    </>
+  )}
+</div>
+
       </div>
 
       {/* Mobile Dropdown Menu with Glassmorphism */}
@@ -81,28 +101,39 @@ const NavBar = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             {user && (
-            <div>
-            <Link
-              to="/"
-              className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
-              onClick={() => setIsOpen(false)}
-            >
-              Home
-            </Link>        
-            <Link
-              to="/saved"
-              className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
-              onClick={() => setIsOpen(false)}
-            >
-              Saved
-            </Link>
-            <div className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300">
-            <button
-              className=" text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
-              onClick={handleClick}>Logout</button>
-            </div>              
-            </div>
-            )}
+  <div>
+    {/* Styled email badge */}
+    <div className="text-center mb-2">
+      <span className="inline-block bg-white/20 text-white text-xs px-3 py-1 rounded-full border border-white/40 font-mono shadow-sm">
+        {user.email}
+      </span>
+    </div>
+
+    <Link
+      to="/"
+      className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
+      onClick={() => setIsOpen(false)}
+    >
+      Home
+    </Link>
+    <Link
+      to="/saved"
+      className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
+      onClick={() => setIsOpen(false)}
+    >
+      Saved
+    </Link>
+    <div className="block text-center text-lg font-mono hover:text-[#fefae0] transition-colors duration-300">
+      <button
+        className="text-lg font-mono hover:text-[#fefae0] transition-colors duration-300"
+        onClick={handleClick}
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+)}
+
             {!user && (
             <div>
             <Link
